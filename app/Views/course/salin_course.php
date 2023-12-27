@@ -7,10 +7,8 @@ $tahun_min = $tahun_now - 8;
 <div class="main-content">
     <section class="section">
         <div class="section-header bg-warning">
-            <h1 class="text-primary">Semua Course</h1>
+            <h1 class="text-primary">Salin <i>Course</i> </h1>
             <div class="section-header-breadcrumb">
-                <div class="breadcrumb-item active"><a href="#">Course</a></div>
-                <div class="breadcrumb-item">Semua Course</div>
             </div>
         </div>
         <div class="section-body">
@@ -20,7 +18,7 @@ $tahun_min = $tahun_now - 8;
                         <div class="card-body">
                             <ul class="nav nav-tabs" id="myTab" role="tablist">
                                 <li class="nav-item">
-                                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Semua Course</a>
+                                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Mata Kuliah</a>
                                 </li>
                             </ul>
                             <div class="tab-content" id="myTabContent">
@@ -30,10 +28,10 @@ $tahun_min = $tahun_now - 8;
                                             <span>Keterangan</span><br>
                                             <ul>
                                                 <li>
-                                                    <strong class="text-primary">Tombol Salin</strong> digunakan untuk membuat course dengan menyalin master course yang telah dibagikan oleh dosen pembuat RPS
+                                                    <strong class="text-primary">Tombol Salin</strong> digunakan untuk membuat <i>course</i> dengan menyalin master <i>course</i> yang telah dibagikan oleh dosen pembuat RPS
                                                 </li>
                                                 <li>
-                                                    <strong class="text-primary">Tombol Upload</strong> digunakan untuk membuat course baru dengan mengunggah file MBZ hasil backup course dari LMS
+                                                    <strong class="text-primary">Tombol Upload</strong> digunakan untuk membuat <i>course</i> baru dengan mengunggah file MBZ hasil <i>backup course</i> dari LMS
                                                 </li>
                                             </ul>
                                         </div>
@@ -56,10 +54,10 @@ $tahun_min = $tahun_now - 8;
                                                         <th class="text-center">Program Studi</th>
                                                         <th class="text-center">Dosen</th>
                                                         <th class="text-center">Kelas</th>
-                                                        <th class="text-center">Jml KRS</th>
+                                                        <th class="text-center">Jml. KRS</th>
                                                         <!-- <th  class="text-center">Create</th> -->
                                                         <th class="text-center">Salin</th>
-                                                        <th class="text-center">Upload MBZ</th>
+                                                        <th class="text-center">Unggah MBZ</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -70,6 +68,10 @@ $tahun_min = $tahun_now - 8;
                                                                     <?php if (($i == 0) && ($k == 0)) { ?>
                                                                         <td rowspan="<?= $val['jml_mk']; ?>">
                                                                             <?= $mk, $k;  ?>
+                                                                            <?php if (count($val['dosen']) > 1) { ?>
+                                                                                <br> <button class="btn btn-sm btn-success">Gabungkan</button>
+                                                                            <?php    } ?>
+
                                                                         </td>
                                                                         <td rowspan="<?= $val['jml_mk']; ?>">
                                                                             <?= $v['kode_prodi']; ?>
@@ -86,12 +88,14 @@ $tahun_min = $tahun_now - 8;
                                                                     <td><?= $v['jml_peserta']; ?></td>
                                                                     <?php if ($i == 0) { ?>
                                                                         <!-- <td> <button class="btn btn-success" type="button">Create</button></td> -->
-                                                                        <td>
+                                                                        <td class="text-center">
                                                                             <button type="button" class="btn btn-sm btn-warning" data-toggle="modal" data-target="#exampleModal">
                                                                                 Salin
                                                                             </button>
                                                                         </td>
-                                                                        <td> <button class="btn btn-sm btn-info" type="button">Upload</button></td>
+                                                                        <td class="text-center">
+                                                                            <button class="btn btn-sm btn-info" type="button">Unggah</button>
+                                                                        </td>
                                                                     <?php  } ?>
                                                                 </tr>
                                                             <?php } ?>
@@ -118,7 +122,7 @@ $tahun_min = $tahun_now - 8;
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <h5 class="modal-title" id="exampleModalLabel"><i>Course</i> TIN6788</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -135,8 +139,8 @@ $tahun_min = $tahun_now - 8;
                         <tbody>
                             <tr>
                                 <td scope="row">Analisis Perancangan Sistem Informasi</td>
-                                <td>Purwo Setiawan, S.T., M.Sc.</td>
-                                <td><button class="btn btn-sm btn-primary">create</button></td>
+                                <td>Ujang Maman, S.T., M.Sc.</td>
+                                <td><button class="btn btn-sm btn-primary">Pilih</button></td>
                             </tr>
                         </tbody>
                     </table>

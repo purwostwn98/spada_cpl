@@ -29,6 +29,11 @@ $routes->post('/master/do-import-krs', 'Master::do_import_krs');
 $routes->get('/master-cpl', 'Master::v_mstr_cpl');
 $routes->get('/master-dtlmk', 'Master::v_detail_mk');
 
+//Halaman CPL
+$routes->get('/cpl-mhs', 'Cpl::cpl_mhs');
+$routes->get('/cpl-angkatan', 'Cpl::cpl_angkatan');
+$routes->get('/cpl-mk', 'Cpl::cpl_mk');
+
 //Halaman dinamis
 $routes->post('/dinamis/load-mstr-mahasiswa', 'Dinamis::load_mstr_mahasiswa');
 $routes->post('/dinamis/load-mstr-mk', 'Dinamis::load_mstr_mk');
@@ -39,6 +44,7 @@ $routes->post('/dinamis/load-modal-cpmk', 'Dinamis::load_modal_cpmk');
 
 $routes->get('/courseadm/semua-course', 'Courseadm::v_semua_course');
 
+//Halaman Dosen
 $routes->get('/dosen/home', 'Dosen::home');
 $routes->get('/dosen/input-nilai/(:any)', 'Dosen::v_input_nilai/$1');
 $routes->get('/dosen/metode-nilai/(:any)', 'Dosen::v_metode_nilai/$1');
@@ -47,3 +53,9 @@ $routes->get('/dosen/rekap-nilai-lms/(:any)', 'Dosen::v_rekap_nilai_lms/$1');
 $routes->get('/dosen/salin-course', 'Dosen::v_salin_course');
 $routes->get('/dosen/buat-course', 'Dosen::v_buat_course');
 $routes->get('/dosen/master-mbz', 'Dosen::v_master_mbz');
+
+//Halaman Mahasiswa
+$routes->get('/mhs/home', 'Mahasiswa::home');
+$routes->get('/mhs/nilai-cpl', 'Mahasiswa::nilai_cpl');
+$routes->get('/mhs/nilai-lms', 'Mahasiswa::nilai_lms');
+$routes->get('/mhs/nilai-subcpmk', 'Mahasiswa::nilai_subcpmk');

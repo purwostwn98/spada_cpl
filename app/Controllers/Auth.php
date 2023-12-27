@@ -18,17 +18,28 @@ class Auth extends BaseController
         $pass = $this->request->getPost('kunci');
         if ($user == 'admin') {
             $kode_user = 1;
+            $kaprodi = 0;
         } elseif ($user == 'dosen') {
             $kode_user = 8;
+            $kaprodi = 0;
+        } elseif ($user == 'kaprodi') {
+            $kode_user = 8;
+            $kaprodi = 1;
+        } elseif ($user == 'mahasiswa') {
+            $kode_user = 10;
+            $kaprodi = 0;
         }
         $data_session = [
-            'kode_jabatan' => $kode_user
+            'kode_jabatan' => $kode_user,
+            'kaprodi' => $kaprodi
         ];
         $_SESSION['userdata'] =  $data_session;
         if ($_SESSION['userdata']['kode_jabatan'] == 1) {
             return redirect()->to('/');
         } elseif ($_SESSION['userdata']['kode_jabatan'] == 8) {
             return redirect()->to('/dosen/home');
+        } elseif ($_SESSION['userdata']['kode_jabatan'] == 10) {
+            return redirect()->to('/mhs/home');
         }
     }
 

@@ -2,9 +2,23 @@
 <?= $this->section("konten"); ?>
 <div class="main-content">
     <section class="section">
-        <div class="section-header bg-warning">
+        <div class="section-header mb-2">
             <h1 class="text-primary">Beranda</h1>
         </div>
+
+        <div class="row">
+            <div class="col-12 d-flex justify-content-center">
+
+                <div style="border-radius: 10px;" class="form-group row bg-primary p-2 mb-3 mt-0">
+                    <label for="inputEmail3" class="col-sm-4 col-form-label text-white form-sm">Pilih semester: </label>
+                    <div class="col-sm-8">
+                        <input type="number" class="form-control" id="inputEmail3" value="6" placeholder="Email">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
         <article class="article article-style-c">
             <div class="row">
                 <div class="col-lg-4 col-md-5 col-sm-12">
@@ -22,59 +36,21 @@
                                         <i class="fa fa-bars"></i> | Aktivitas
                                     </button>
                                     <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 29px, 0px);">
-                                        <a class="dropdown-item has-icon" href="/dosen/rekap-nilai-lms/kdmk"><i class="far fa-file"></i>Rekap nilai LMS</a>
-                                        <a class="dropdown-item has-icon" href="/dosen/metode-nilai/kdmk"><i class="fa fa-cog"></i>Sumber penilaian</a>
-                                        <a class="dropdown-item has-icon" href="/dosen/input-nilai/kdmk"><i class="far fa-edit"></i>Input nilai Sub-CPMK</a>
+                                        <a class="dropdown-item has-icon" href="#" data-toggle="modal" data-target="#exampleModal"><i class="far fa-file-alt"></i><i>Assignment</i></a>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-lg-3 col-sm-12">
                                 <div class="dropdown d-inline">
                                     <button class="btn btn-success btn-sm dropdown-toggle" type="button" id="dropdownMenuButton2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <i class="fa fa-users"></i> | Peserta
+                                        <i class="fas fa-award"></i> | <i>Reports</i>
                                     </button>
                                     <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 29px, 0px);">
-                                        <a class="dropdown-item has-icon" href="#"><i class="fas fa-user-plus"></i> Atur peserta manual</a>
-                                        <a class="dropdown-item has-icon" href="#"><i class="fas fa-chalkboard-teacher"></i> Atur dosen</a>
-                                        <a class="dropdown-item has-icon" href="#"><i class="fas fa-user-tie"></i> Atur asisten dosen</a>
-                                        <a class="dropdown-item has-icon" href="#"><i class="fas fa-users"></i> <i>Enrolled Users</i></a>
-                                        <a class="dropdown-item has-icon" href="#"><i class="fas fa-street-view"></i> Atur Grup LMS</a>
+                                        <a class="dropdown-item has-icon" href="/mhs/nilai-lms"><i class="far fa-eye"></i>Lihat Nilai LMS</a>
+                                        <a class="dropdown-item has-icon" href="/mhs/nilai-subcpmk"><i class="fas fa-folder-open"></i>Lihat Nilai Sub-CPMK</a>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-3 col-sm-12">
-                                <div class="dropdown d-inline">
-                                    <button class="btn btn-danger btn-sm dropdown-toggle" type="button" id="dropdownMenuButton2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <i class="fa fa-cog" aria-hidden="true"></i> | Pengaturan
-                                    </button>
-                                    <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 29px, 0px);">
-                                        <a class="dropdown-item has-icon" href="#"><i class="fas fa-pen-square"></i> Atur course </a>
-                                        <a class="dropdown-item has-icon" href="#"><i class="fas fa-archive"></i> <i>Backup course</i></a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-sm-12">
-                                <div class="dropdown d-inline">
-                                    <button class="btn btn-info btn-sm dropdown-toggle" type="button" id="dropdownMenuButton2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <i class="fa fa-keyboard" aria-hidden="true"></i> | Laporan
-                                    </button>
-                                    <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 29px, 0px);">
-                                        <a class="dropdown-item has-icon" href="/dosen/eval-cpl/kdmk"><i class="fa fa-signal" aria-hidden="true"></i>Evaluasi MK</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- <div class="col-lg-2 col-sm-12">
-                                <div class="dropdown d-inline">
-                                    <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <i class="fa fa-question" aria-hidden="true"></i> | Question Bank
-                                    </button>
-                                    <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 29px, 0px);">
-                                        <a class="dropdown-item has-icon" href="#"><i class="far fa-heart"></i> Action</a>
-                                        <a class="dropdown-item has-icon" href="#"><i class="far fa-file"></i> Another action</a>
-                                        <a class="dropdown-item has-icon" href="#"><i class="far fa-clock"></i> Something else here</a>
-                                    </div>
-                                </div>
-                            </div> -->
                         </div>
                         <hr class="mb-0">
                         <div class="article-title mt-0">
@@ -134,59 +110,22 @@
                                         <i class="fa fa-bars"></i> | Aktivitas
                                     </button>
                                     <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 29px, 0px);">
-                                        <a class="dropdown-item has-icon" href="/dosen/rekap-nilai-lms/kdmk"><i class="far fa-file"></i>Rekap nilai LMS</a>
-                                        <a class="dropdown-item has-icon" href="/dosen/metode-nilai/kdmk"><i class="fa fa-cog"></i>Sumber penilaian</a>
-                                        <a class="dropdown-item has-icon" href="/dosen/input-nilai/kdmk"><i class="far fa-edit"></i>Input nilai Sub-CPMK</a>
+                                        <a class="dropdown-item has-icon" href="/dosen/rekap-nilai-lms/kdmk"><i class="far fa-file-alt"></i>Tugas</a>
+                                        <a class="dropdown-item has-icon" href="/dosen/rekap-nilai-lms/kdmk"><i class="fas fa-shapes"></i><i>Quiz</i></a>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-lg-3 col-sm-12">
                                 <div class="dropdown d-inline">
                                     <button class="btn btn-success btn-sm dropdown-toggle" type="button" id="dropdownMenuButton2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <i class="fa fa-users"></i> | Peserta
+                                        <i class="fas fa-award"></i> | <i>Reports</i>
                                     </button>
                                     <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 29px, 0px);">
-                                        <a class="dropdown-item has-icon" href="#"><i class="fas fa-user-plus"></i> Atur peserta manual</a>
-                                        <a class="dropdown-item has-icon" href="#"><i class="fas fa-chalkboard-teacher"></i> Atur dosen</a>
-                                        <a class="dropdown-item has-icon" href="#"><i class="fas fa-user-tie"></i> Atur asisten dosen</a>
-                                        <a class="dropdown-item has-icon" href="#"><i class="fas fa-users"></i> <i>Enrolled Users</i></a>
-                                        <a class="dropdown-item has-icon" href="#"><i class="fas fa-street-view"></i> Atur Grup LMS</a>
+                                        <a class="dropdown-item has-icon" href="/mhs/nilai-lms"><i class="far fa-eye"></i>Lihat Nilai LMS</a>
+                                        <a class="dropdown-item has-icon" href="/dosen/rekap-nilai-lms/kdmk"><i class="fas fa-folder-open"></i>Lihat Nilai Sub-CPMK</a>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-3 col-sm-12">
-                                <div class="dropdown d-inline">
-                                    <button class="btn btn-danger btn-sm dropdown-toggle" type="button" id="dropdownMenuButton2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <i class="fa fa-cog" aria-hidden="true"></i> | Pengaturan
-                                    </button>
-                                    <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 29px, 0px);">
-                                        <a class="dropdown-item has-icon" href="#"><i class="fas fa-pen-square"></i> Atur course </a>
-                                        <a class="dropdown-item has-icon" href="#"><i class="fas fa-archive"></i> <i>Backup course</i></a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-sm-12">
-                                <div class="dropdown d-inline">
-                                    <button class="btn btn-info btn-sm dropdown-toggle" type="button" id="dropdownMenuButton2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <i class="fa fa-keyboard" aria-hidden="true"></i> | Laporan
-                                    </button>
-                                    <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 29px, 0px);">
-                                        <a class="dropdown-item has-icon" href="/dosen/eval-cpl/kdmk"><i class="fa fa-signal" aria-hidden="true"></i>Evaluasi MK</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- <div class="col-lg-2 col-sm-12">
-                                <div class="dropdown d-inline">
-                                    <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <i class="fa fa-question" aria-hidden="true"></i> | Question Bank
-                                    </button>
-                                    <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 29px, 0px);">
-                                        <a class="dropdown-item has-icon" href="#"><i class="far fa-heart"></i> Action</a>
-                                        <a class="dropdown-item has-icon" href="#"><i class="far fa-file"></i> Another action</a>
-                                        <a class="dropdown-item has-icon" href="#"><i class="far fa-clock"></i> Something else here</a>
-                                    </div>
-                                </div>
-                            </div> -->
                         </div>
                         <hr class="mb-0">
                         <div class="article-title mt-0">
@@ -221,5 +160,77 @@
             </div>
         </article>
     </section>
+</div>
+<div class="modal fade bd-example-modal-lg" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4>ECE3231256 - Analisis Sistem Tenaga Listrik</h4>
+                            </div>
+                            <div class="card-body">
+                                <div id="accordion">
+                                    <div class="accordion">
+                                        <div class="accordion-header" role="button" data-toggle="collapse" data-target="#panel-body-1" aria-expanded="false">
+                                            <h4 class="mb-0">CPMK 1 (bobot: 20%)</h4>
+                                            <span>Mampu menganalisis daya komplex baik satu fase maupun 3 fase setimbang, diagram segaris sistem daya, dan diagram impedansi serta reaktansi sistem daya</span>
+                                        </div>
+                                        <div class="accordion-body collapse" id="panel-body-1" data-parent="#accordion">
+                                            <ul>
+                                                <li><a href=""><i class="fas fa-business-time"></i> Studi Kasus 1</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="accordion2">
+                                    <div class="accordion">
+                                        <div class="accordion-header" role="button" data-toggle="collapse" data-target="#panel-body-2" aria-expanded="false">
+                                            <h4 class="mb-0">CPMK 2 (bobot: 20%)</h4>
+                                            <span>Mampu menghitung besaran satuan volt, amper, ohm dan lainnya dalam bentuk per unit sistem</span>
+                                        </div>
+                                        <div class="accordion-body collapse" id="panel-body-2" data-parent="#accordion2">
+                                            <ul>
+                                                <li><a href=""><i class="fas fa-bullhorn"></i> Quiz Pengantar</a></li>
+                                                <li><a href=""><i class="fas fa-bullhorn"></i> Quiz Pengantar2</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="accordion3">
+                                    <div class="accordion">
+                                        <div class="accordion-header" role="button" data-toggle="collapse" data-target="#panel-body-3" aria-expanded="false">
+                                            <h4 class="mb-0">CPMK 3 (bobot: 35%)</h4>
+                                            <span>Mampu menghitung arus, tegangan, jatuh tegangan dan daya pada sistem aliran beban</span>
+                                        </div>
+                                        <div class="accordion-body collapse" id="panel-body-3" data-parent="#accordion3">
+                                            <ul>
+                                                <li><a href=""><i class="fas fa-business-time"></i> Proyek</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="accordion4">
+                                    <div class="accordion">
+                                        <div class="accordion-header" role="button" data-toggle="collapse" data-target="#panel-body-4" aria-expanded="false">
+                                            <h4 class="mb-0">CPMK 4 (bobot: 25%)</h4>
+                                            <span>Mampu menggunakan program Etap untuk perhitungan Aliran Beban</span>
+                                        </div>
+                                        <div class="accordion-body collapse" id="panel-body-4" data-parent="#accordion4">
+                                            <ul>
+                                                <li><a href=""><i class="fas fa-bullhorn"></i> Quiz Perancangan Sirkuit</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <?= $this->endSection(); ?>

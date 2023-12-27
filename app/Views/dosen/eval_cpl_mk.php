@@ -21,6 +21,12 @@
             <p class="section-lead">
                 <img src="<?= base_url(); ?>/gambar_demo/ketercapaian_cpl.png" alt="">
             </p>
+            <h4 class="section-title">Evaluasi Dosen</h4>
+            <p class="section-lead bg-white p-3">
+                Perkuliahan berjalan dengan baik. Namun tugas besar perlu dipantau setiap minggu untuk melihat perkembangan kemajuan pekerjaan kelompok. Perlu dibuatkan formulir untuk submit perkembangan tiap minggu tersebut.
+                <br> <br>
+                <button class="btn btn-warning">Edit Evaluasi</button>
+            </p>
 
 
         </div>

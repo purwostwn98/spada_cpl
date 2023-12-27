@@ -54,9 +54,9 @@
   border-radius: 3px;
   border: none;
   position: relative;
-  margin-bottom: 30px; }
+  margin-bottom: 10px; }
   .article .article-header {
-    height: 170px;
+    height: 500px;
     position: relative;
     overflow: hidden; }
     .article .article-header .article-image {
@@ -111,7 +111,7 @@
   .article.article-style-b .article-details .article-cta {
     text-align: right; }
   .article.article-style-c .article-header {
-    height: 233px; }
+    height: 260px; }
   .article.article-style-c .article-details .article-category {
     text-transform: uppercase;
     margin-bottom: 5px;

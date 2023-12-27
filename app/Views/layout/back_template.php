@@ -4,21 +4,32 @@
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
-    <title>Components &rsaquo; Hero &mdash; Stisla</title>
+    <title>Spada - UMS</title>
 
     <!-- General CSS Files -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> -->
     <!-- CSS Data Tables -->
     <link rel="stylesheet" href="<?= base_url(); ?>/node_modules/datatables.net-bs4/css/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" href="<?= base_url(); ?>/node_modules/datatables.net-select-bs4/css/select.bootstrap4.min.css">
     <link rel="stylesheet" href="<?= base_url(); ?>/node_modules/select2/dist/css/select2.min.css">
 
+    <!-- CSS Statistic (chart)-->
+    <link rel="stylesheet" href="<?= base_url(); ?>/node_modules/jqvmap/dist/jqvmap.min.css">
+    <link rel="stylesheet" href="<?= base_url(); ?>/node_modules/flag-icon-css/css/flag-icon.min.css">
+
     <!-- Template CSS -->
     <link rel="stylesheet" href="<?= base_url(); ?>/assets/css/style.css">
     <link rel="stylesheet" href="<?= base_url(); ?>/assets/css/components.css">
 </head>
+
+<?php
+$session = \Config\Services::session();
+$userSession = $session->get('userdata');
+$jabatan = $userSession['kode_jabatan'];
+$kaprodi = $userSession['kaprodi'];
+?>
 
 <body>
     <div id="app">
@@ -36,7 +47,20 @@
 
                     <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
                             <img alt="image" src="<?= base_url(); ?>/assets/img/avatar/avatar-1.png" class="rounded-circle mr-1">
-                            <div class="d-sm-none d-lg-inline-block">Hi, Ujang Maman</div>
+                            <div class="d-sm-none d-lg-inline-block">Hi,
+
+                                <?php if ($jabatan == 1) {
+                                    echo "Admin";
+                                } elseif ($jabatan == 8) {
+                                    if ($kaprodi == 1) {
+                                        echo "Kaprodi";
+                                    } else {
+                                        echo "Dosen";
+                                    }
+                                } elseif ($jabatan == 10) {
+                                    echo "Mahasiswa";
+                                } ?>
+                            </div>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right">
                             <div class="dropdown-title">Logged in 5 min ago</div>
@@ -66,36 +90,31 @@
                     <div class="sidebar-brand sidebar-brand-sm">
                         <a href="index.html">SPD</a>
                     </div>
-                    <?php
-                    $session = \Config\Services::session();
-                    $userSession = $session->get('userdata');
-                    $jabatan = $userSession['kode_jabatan'];
-                    ?>
 
 
                     <?php if ($jabatan == 1) { ?>
                         <ul class="sidebar-menu mt-4">
                             <li class="menu-header">Dashboard</li>
                             <li class="nav-item <?= $halaman[1] == 'home' ? 'active' : ''; ?>">
-                                <a href="/" class="nav-link"><i class="fas fa-fire"></i><span>Home</span></a>
+                                <a href="/" class="nav-link"><i class="fas fa-hamburger"></i><span>Home</span></a>
                             </li>
                             <li class="menu-header">Course</li>
                             <li class="nav-item <?= $halaman[1] == 'semua-course' ? 'active' : ''; ?>">
-                                <a href="/courseadm/semua-course" class="nav-link"><i class="fas fa-columns"></i> <span>Semua Course</span></a>
+                                <a href="/courseadm/semua-course" class="nav-link"><i class="fas fa-book"></i> <span>Semua Course</span></a>
                             </li>
                             <li class="nav-item dropdown">
-                                <a href="#" class="nav-link" data-toggle="dropdown"><i class="fas fa-columns"></i> <span>Master Course</span></a>
+                                <a href="#" class="nav-link" data-toggle="dropdown"><i class="fas fa-archive"></i> <span>Master Course</span></a>
                             </li>
 
                             <li class="menu-header">CPL</li>
-                            <li class="nav-item dropdown">
-                                <a href="#" class="nav-link"><i class="far fa-user"></i> <span>CPL Mahasiswa</span></a>
+                            <li class="nav-item <?= $halaman[1] == 'cpl-mhs' ? 'active' : ''; ?>">
+                                <a href="/cpl-mhs" class="nav-link"><i class="fas fa-user-graduate"></i> <span>CPL Mahasiswa</span></a>
                             </li>
-                            <li class="nav-item dropdown">
-                                <a href="#" class="nav-link"><i class="far fa-user"></i> <span>CPL Angkatan</span></a>
+                            <li class="nav-item <?= $halaman[1] == 'cpl-angkatan' ? 'active' : ''; ?>">
+                                <a href="/cpl-angkatan" class="nav-link"><i class="fas fa-users"></i> <span>CPL Angkatan</span></a>
                             </li>
-                            <li class="nav-item dropdown">
-                                <a href="#" class="nav-link"><i class="far fa-user"></i> <span>Eval. CPL MK</span></a>
+                            <li class="nav-item <?= $halaman[1] == 'cpl-mk' ? 'active' : ''; ?>">
+                                <a href="/cpl-mk" class="nav-link"><i class="fas fa-chalkboard-teacher"></i> <span>Eval. CPL MK</span></a>
                             </li>
 
                             <li class="menu-header">Master Data</li>
@@ -136,19 +155,58 @@
                         <ul class="sidebar-menu mt-4">
                             <li class="menu-header">Menu Dosen</li>
                             <li class="nav-item <?= $halaman[1] == 'home' ? 'active' : ''; ?>">
-                                <a href="/dosen/home" class="nav-link"><i class="fas fa-fire"></i><span>Home</span></a>
+                                <a href="/dosen/home" class="nav-link"><i class="fas fa-fire"></i><span>Beranda</span></a>
                             </li>
                             <li class="nav-item dropdown <?= $halaman[0] == 'course' ? 'active' : ''; ?>">
                                 <a href="#" class="nav-link has-dropdown"><i class="fas fa-th-large"></i> <span>Course</span></a>
                                 <ul class="dropdown-menu">
                                     <li><a href="/dosen/salin-course" class="nav-link <?= $halaman[1] == 'salin-course' ? 'active beep beep-sidebar' : ''; ?>">Salin Course</a></li>
                                     <li><a href="/dosen/buat-course" class="nav-link <?= $halaman[1] == 'buat-course' ? 'active beep beep-sidebar' : ''; ?>">Buat Course</a></li>
-                                    <li><a href="/dosen/master-mbz" class="nav-link <?= $halaman[1] == 'master-mbz' ? 'active beep beep-sidebar' : ''; ?>">Master Mbz</a></li>
+                                    <!-- <li><a href="/dosen/master-mbz" class="nav-link <?= $halaman[1] == 'master-mbz' ? 'active beep beep-sidebar' : ''; ?>">Master Mbz</a></li> -->
                                 </ul>
                             </li>
+
+                            <?php if ($kaprodi == 1) { ?>
+                                <li class="menu-header">CPL</li>
+                                <li class="nav-item <?= $halaman[1] == 'cpl-mhs' ? 'active' : ''; ?>">
+                                    <a href="/cpl-mhs" class="nav-link"><i class="fas fa-user-graduate"></i> <span>CPL Mahasiswa</span></a>
+                                </li>
+                                <li class="nav-item <?= $halaman[1] == 'cpl-angkatan' ? 'active' : ''; ?>">
+                                    <a href="/cpl-angkatan" class="nav-link"><i class="fas fa-users"></i> <span>CPL Angkatan</span></a>
+                                </li>
+                                <li class="nav-item <?= $halaman[1] == 'cpl-mk' ? 'active' : ''; ?>">
+                                    <a href="/cpl-mk" class="nav-link"><i class="fas fa-chalkboard-teacher"></i> <span>Eval. CPL MK</span></a>
+                                </li>
+                            <?php } ?>
+
                         </ul>
                     <?php } ?>
 
+                    <?php if ($jabatan == 10) { ?>
+                        <ul class="sidebar-menu mt-4">
+                            <li class="menu-header">Menu Mahasiswa</li>
+                            <li class="nav-item <?= $halaman[1] == 'home' ? 'active' : ''; ?>">
+                                <a href="/mhs/home" class="nav-link"><i class="fas fa-fire"></i><span>Beranda</span></a>
+                            </li>
+                            <li class="nav-item <?= $halaman[1] == 'nilai-cpl' ? 'active' : ''; ?>">
+                                <a href="/mhs/nilai-cpl" class="nav-link"><i class="fas fa-th-large"></i> <span>Nilai CPL</span></a>
+                            </li>
+
+                            <?php if ($kaprodi == 1) { ?>
+                                <li class="menu-header">CPL</li>
+                                <li class="nav-item <?= $halaman[1] == 'cpl-mhs' ? 'active' : ''; ?>">
+                                    <a href="/cpl-mhs" class="nav-link"><i class="fas fa-user-graduate"></i> <span>CPL Mahasiswa</span></a>
+                                </li>
+                                <li class="nav-item <?= $halaman[1] == 'cpl-angkatan' ? 'active' : ''; ?>">
+                                    <a href="/cpl-angkatan" class="nav-link"><i class="fas fa-users"></i> <span>CPL Angkatan</span></a>
+                                </li>
+                                <li class="nav-item <?= $halaman[1] == 'cpl-mk' ? 'active' : ''; ?>">
+                                    <a href="/cpl-mk" class="nav-link"><i class="fas fa-chalkboard-teacher"></i> <span>Eval. CPL MK</span></a>
+                                </li>
+                            <?php } ?>
+
+                        </ul>
+                    <?php } ?>
 
                     <div class="mt-4 mb-4 p-3 hide-sidebar-mini">
                         <a href="https://getstisla.com/docs" class="btn btn-primary btn-lg btn-block btn-icon-split">
@@ -190,12 +248,22 @@
     <!-- JS Libraies select2 -->
     <script src="<?= base_url(); ?>/node_modules/select2/dist/js/select2.full.min.js"></script>
 
+    <!-- JS Libraies statistic -->
+    <script src="<?= base_url(); ?>/node_modules/jquery-sparkline/jquery.sparkline.min.js"></script>
+    <script src="<?= base_url(); ?>/node_modules/chart.js/dist/Chart.min.js"></script>
+    <script src="<?= base_url(); ?>/node_modules/jqvmap/dist/jquery.vmap.min.js"></script>
+    <script src="<?= base_url(); ?>/node_modules/jqvmap/dist/maps/jquery.vmap.world.js"></script>
+    <script src="<?= base_url(); ?>/node_modules/jqvmap/dist/maps/jquery.vmap.indonesia.js"></script>
+
     <!-- Template JS File -->
     <script src="<?= base_url(); ?>/assets/js/scripts.js"></script>
     <script src="<?= base_url(); ?>/assets/js/custom.js"></script>
 
     <!-- Page Specific JS File -->
     <script src="<?= base_url(); ?>/assets/js/page/modules-datatables.js"></script>
+
+    <!-- Page Specific JS File -->
+    <!-- <script src="<?= base_url(); ?>/assets/js/page/components-statistic.js"></script> -->
 </body>
 
 </html>

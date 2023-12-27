@@ -3,10 +3,9 @@
 <div class="main-content">
     <section class="section">
         <div class="section-header justify-content-between">
-            <h1 class="">Daftar Nilai</h1>
+            <h1 class="">Nilai Sub-CPMK</h1>
             <div>
-                <a target="_blank" href="<?= base_url(); ?>/excel_template/template_nilai_subcpmk.xlsx" class="btn btn-success"><i class="far fa-edit"></i> | Input Nilai</a>
-                <button class="btn btn-primary"><i class="fa fa-upload"></i> | Unggah Nilai</button>
+                ECE3231256 - Analisis Sistem Tenaga Listrik
             </div>
         </div>
         <div class="row">
@@ -25,7 +24,7 @@
                                 <th colspan="3" class="text-white text-center">CPMK 3</th>
                                 <th colspan="4" class="text-white text-center">CPMK 4</th>
                                 <th colspan="4" class="text-white text-center">CPMK 5</th>
-                                <th rowspan="2" class="text-white text-center">Edit</th>
+                                <th rowspan="2" class="text-white text-center">Nilai Akhir</th>
                             </tr>
                             <tr>
                                 <th class="text-white text-center">1</th>
@@ -49,70 +48,9 @@
                         <tbody>
                             <tr>
                                 <td>
-                                    2
-                                </td>
-                                <td>D600160126</td>
-                                <td class="">
-                                    Dani Setyawan
-                                </td>
-                                <td>
-                                    56
-                                </td>
-                                <td>
-                                    20
-                                </td>
-                                <td>
-                                    99
-                                </td>
-                                <td>
-                                    88
-                                </td>
-                                <td>
-                                    66
-                                </td>
-                                <td>
-                                    0
-                                </td>
-                                <td>
-                                    0
-                                </td>
-                                <td>
-                                    90
-                                </td>
-                                <td>
-                                    0
-                                </td>
-                                <td>
-                                    0
-                                </td>
-                                <td>
-                                    0
-                                </td>
-                                <td>
-                                    0
-                                </td>
-                                <td>
-                                    0
-                                </td>
-                                <td>
-                                    0
-                                </td>
-                                <td>
-                                    0
-                                </td>
-                                <td>
-                                    0
-                                </td>
-                                <td>
-                                    <button class="btn btn-sm btn-warning" data-toggle="modal" data-target="#exampleModal"><i class="fa fa-edit"></i></button>
-                                </td>
-
-                            </tr>
-                            <tr>
-                                <td>
                                     1
                                 </td>
-                                <td>D600160125</td>
+                                <td>D400160125</td>
                                 <td class="">
                                     Purwo Setiawan
                                 </td>
@@ -164,8 +102,8 @@
                                 <td>
                                     0
                                 </td>
-                                <td>
-                                    <button class="btn btn-sm btn-warning"><i class="fa fa-edit"></i></button>
+                                <td class="bg-secondary text-center">
+                                    <b>74</b>
                                 </td>
                             </tr>
                         </tbody>

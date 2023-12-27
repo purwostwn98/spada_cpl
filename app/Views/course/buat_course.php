@@ -7,10 +7,9 @@ $tahun_min = $tahun_now - 8;
 <div class="main-content">
     <section class="section">
         <div class="section-header bg-warning">
-            <h1 class="text-primary">Buat Course</h1>
+            <h1 class="text-primary">Buat <i>Course</i></h1>
             <div class="section-header-breadcrumb">
-                <div class="breadcrumb-item active"><a href="#">Course</a></div>
-                <div class="breadcrumb-item">Course</div>
+                <div class="breadcrumb-item"><i>Course</i></div>
             </div>
         </div>
         <div class="section-body">
@@ -30,19 +29,19 @@ $tahun_min = $tahun_now - 8;
 
                                             <span>Keterangan</span>
                                             <br>
-                                            <span>Halaman ini digunakan untuk membuat course baru bagi dosen pembuat RPS</span>
+                                            <span>Halaman ini digunakan untuk membuat <i>course</i> baru bagi dosen pembuat RPS</span>
                                             <ul>
                                                 <li>
-                                                    <strong class="text-primary">Tombol Create</strong> digunakan untuk membuat course baru dengan topic yang telah disesuaikan dengan sub-cpmk
+                                                    <strong class="text-primary">Tombol Buat</strong> digunakan untuk membuat <i>course</i> baru dengan topic yang telah disesuaikan dengan sub-cpmk
                                                 </li>
                                                 <li>
-                                                    <strong class="text-primary">Tombol Connect</strong> digunakan untuk membuat course baru dengan menghubungkan dengan course yg sudah ada sebelumnya atau dari master course
+                                                    <strong class="text-primary">Tombol Konek</strong> digunakan untuk membuat <i>course</i> baru dengan menggunakan <i>course</i> yang sudah dibuat pada periode sebelumnya
                                                 </li>
                                                 <li>
-                                                    <strong class="text-primary">Tombol Upload</strong> digunakan untuk membuat course baru dengan mengunggah file MBZ hasil backup course dari LMS
+                                                    <strong class="text-primary">Tombol Unggah</strong> digunakan untuk membuat <i>course</i> baru dengan mengunggah file MBZ hasil <i>backup course</i> dari LMS
                                                 </li>
                                                 <li>
-                                                    <strong class="text-success">Tombol Publish</strong> digunakan untuk membagikan master course dengan dosen pengampu lainnya
+                                                    <strong class="text-success">Tombol Bagikan</strong> digunakan untuk membagikan master <i>course</i> dengan dosen pengampu lainnya
                                                 </li>
                                             </ul>
                                         </div>
@@ -63,48 +62,29 @@ $tahun_min = $tahun_now - 8;
                                                     <tr>
                                                         <th class="text-center">Mata Kuliah</th>
                                                         <th class="text-center">Program Studi</th>
-                                                        <th class="text-center">Dosen</th>
-                                                        <th class="text-center">Kelas</th>
-                                                        <th class="text-center">Jml KRS</th>
-                                                        <th class="text-center">Create</th>
-                                                        <th class="text-center">Connect</th>
-                                                        <th class="text-center">Upload MBZ</th>
-                                                        <th class="text-center">Publish</th>
+                                                        <th class="text-center">Buat</th>
+                                                        <th class="text-center">Konek</th>
+                                                        <th class="text-center">Unggah MBZ</th>
+                                                        <th class="text-center">Bagikan</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <?php foreach ($jml_mk as $mk => $val) {  ?>
-                                                        <?php foreach ($val['dosen'] as $k => $va) { ?>
-                                                            <?php foreach ($va['kelas'] as $i => $v) { ?>
-                                                                <tr>
-                                                                    <?php if (($i == 0) && ($k == 0)) { ?>
-                                                                        <td rowspan="<?= $val['jml_mk']; ?>">
-                                                                            <?= $mk, $k;  ?>
-                                                                        </td>
-                                                                        <td rowspan="<?= $val['jml_mk']; ?>">
-                                                                            <?= $v['kode_prodi']; ?>
-                                                                        </td>
-                                                                    <?php  } ?>
-                                                                    <?php if ($i == 0) { ?>
-                                                                        <td rowspan="<?= $va['jml_kls']; ?>" class="">
-                                                                            <?= $v['id_dosen']; ?>
-                                                                        </td>
-                                                                    <?php  } ?>
-                                                                    <td>
-                                                                        <?= $v['kelas_kuliah']; ?>
-                                                                    </td>
-                                                                    <td><?= $v['jml_peserta']; ?></td>
-                                                                    <?php if ($i == 0) { ?>
-                                                                        <td> <button class="btn btn-primary" type="button">create</button></td>
-                                                                        <td> <button class="btn btn-sm btn-secondary" type="button">connect</button></td>
-                                                                        <td> <button class="btn btn-sm btn-info" type="button">upload</button></td>
-                                                                        <td> <button class="btn btn-sm btn-success" type="button">publish</button></td>
-                                                                    <?php  } ?>
-                                                                </tr>
-                                                            <?php } ?>
-                                                        <?php } ?>
-
-                                                    <?php } ?>
+                                                    <tr>
+                                                        <td>ECE3231118 - Praktikum Fisika Listrik</td>
+                                                        <td>S1 Teknik Elektro</td>
+                                                        <td> <button class="btn btn-sm btn-primary" type="button">Buat</button></td>
+                                                        <td> <button class="btn btn-sm btn-warning" type="button">Konek</button></td>
+                                                        <td> <button class="btn btn-sm btn-info" type="button">Unggah</button></td>
+                                                        <td> <button class="btn btn-sm btn-success" type="button">Bagikan</button></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>ECE3231256 - Analisis Sistem Tenaga Listrik</td>
+                                                        <td>S1 Teknik Elektro</td>
+                                                        <td> <button class="btn btn-sm btn-primary" type="button">Buat</button></td>
+                                                        <td> <button class="btn btn-sm btn-warning" type="button">Konek</button></td>
+                                                        <td> <button class="btn btn-sm btn-info" type="button">Unggah</button></td>
+                                                        <td> <button class="btn btn-sm btn-success" type="button">Bagikan</button></td>
+                                                    </tr>
                                                 </tbody>
                                             </table>
 
