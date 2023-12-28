@@ -3,6 +3,9 @@
 <?php
 $tahun_now = date('Y');
 $tahun_min = $tahun_now - 8;
+$session = \Config\Services::session();
+$userSession = $session->get('userdata');
+$jabatan = $userSession['kode_jabatan'];
 ?>
 <div class="main-content">
     <section class="section">
@@ -62,6 +65,9 @@ $tahun_min = $tahun_now - 8;
                                                     <tr>
                                                         <th class="text-center">Mata Kuliah</th>
                                                         <th class="text-center">Program Studi</th>
+                                                        <?php if ($jabatan == 1) { ?>
+                                                            <th class="text-center">Pembuat RPS</th>
+                                                        <?php  } ?>
                                                         <th class="text-center">Buat</th>
                                                         <th class="text-center">Konek</th>
                                                         <th class="text-center">Unggah MBZ</th>
@@ -72,16 +78,22 @@ $tahun_min = $tahun_now - 8;
                                                     <tr>
                                                         <td>ECE3231118 - Praktikum Fisika Listrik</td>
                                                         <td>S1 Teknik Elektro</td>
+                                                        <?php if ($jabatan == 1) { ?>
+                                                            <td>Ujang Maman, S.T., M.Sc.</td>
+                                                        <?php  } ?>
                                                         <td> <button class="btn btn-sm btn-primary" type="button">Buat</button></td>
-                                                        <td> <button class="btn btn-sm btn-warning" type="button">Konek</button></td>
+                                                        <td> <button class="btn btn-sm btn-warning" type="button" data-toggle="modal" data-target="#exampleModal">Konek</button></td>
                                                         <td> <button class="btn btn-sm btn-info" type="button">Unggah</button></td>
                                                         <td> <button class="btn btn-sm btn-success" type="button">Bagikan</button></td>
                                                     </tr>
                                                     <tr>
                                                         <td>ECE3231256 - Analisis Sistem Tenaga Listrik</td>
                                                         <td>S1 Teknik Elektro</td>
+                                                        <?php if ($jabatan == 1) { ?>
+                                                            <td>Huda, S.T., M.Sc.</td>
+                                                        <?php  } ?>
                                                         <td> <button class="btn btn-sm btn-primary" type="button">Buat</button></td>
-                                                        <td> <button class="btn btn-sm btn-warning" type="button">Konek</button></td>
+                                                        <td> <button class="btn btn-sm btn-warning" type="button" data-toggle="modal" data-target="#exampleModal">Konek</button></td>
                                                         <td> <button class="btn btn-sm btn-info" type="button">Unggah</button></td>
                                                         <td> <button class="btn btn-sm btn-success" type="button">Bagikan</button></td>
                                                     </tr>
@@ -98,7 +110,50 @@ $tahun_min = $tahun_now - 8;
             </div>
         </div>
     </section>
-
+</div>
+<!-- Modal Konek -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"><i>Course</i> ECE3231256 - Analisis Sistem Tenaga Listrik </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table style="font-size: 13px;" class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">No</th>
+                            <th scope="col">Periode</th>
+                            <th scope="col">Pembuat</th>
+                            <th scope="col">#</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td scope="row">1</td>
+                            <td>2022/2023 Gasal</td>
+                            <td>Ujang Maman, S.T., M.Sc.</td>
+                            <td><button class="btn btn-sm btn-primary">Pilih</button></td>
+                        </tr>
+                    </tbody>
+                    <tbody>
+                        <tr>
+                            <td scope="row">2</td>
+                            <td>2021/2022 Gasal</td>
+                            <td>Ujang Maman, S.T., M.Sc.</td>
+                            <td><button class="btn btn-sm btn-primary">Pilih</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
 <script>

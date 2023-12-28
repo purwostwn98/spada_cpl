@@ -30,7 +30,7 @@
                 <div class="card">
                     <div class="card-body">
                         <table class="table">
-                            <tr class="bg-info text-white">
+                            <tr class="bg-primary text-white">
                                 <th>CPL</th>
                                 <th>Deskripsi</th>
                                 <th>Nilai</th>
@@ -57,12 +57,12 @@
                                     <td>90</td>
                                 </tr>
                                 <tr>
-                                    <td>5</td>
+                                    <td class="bg-warning">5</td>
                                     <td>Mampu menerapkan metode, dan teknologi terkini dengan terampil dalam melaksanakan pekerjaan yang berhubungan dengan sistem tenaga listrik, elektronika dan komputer baik secara mandiri atau dalam tim.</td>
                                     <td>30</td>
                                 </tr>
                                 <tr>
-                                    <td>6</td>
+                                    <td class="bg-warning">6</td>
                                     <td>Mampu melakukan komunikasi secara efektif baik tulisan maupun lisan menggunakan teknik komunikasi dan teknologi terbaru dalam rangka menyelesaikan permasalahan yang dihadapi.</td>
                                     <td>30</td>
                                 </tr>

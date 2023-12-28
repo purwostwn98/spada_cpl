@@ -54,17 +54,17 @@ $tahun_min = $tahun_now - 3;
                                                 <table class="table table-striped" id="table-10">
                                                     <thead>
                                                         <tr>
-                                                            <th class="text-center">
+                                                            <th class="text-center" width="10%">
                                                                 CPL
                                                             </th>
-                                                            <th>Deskripsi CPL</th>
-                                                            <th>Tahun</th>
-                                                            <th>Status</th>
-                                                            <th>Action</th>
+                                                            <th width="60%">Deskripsi CPL</th>
+                                                            <th width="10%">Tahun</th>
+                                                            <th width="10%">Status</th>
+                                                            <th width="10%">Action</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr>
+                                                        <!-- <tr>
                                                             <td>
                                                                 CPL 1
                                                             </td>
@@ -78,7 +78,7 @@ $tahun_min = $tahun_now - 3;
                                                             <td>
                                                                 <button class="btn btn-sm btn-warning">edit</button>
                                                             </td>
-                                                        </tr>
+                                                        </tr> -->
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -159,8 +159,10 @@ $tahun_min = $tahun_now - 3;
                                                 <tr class="bg-success text-white">
                                                     <th>No</th>
                                                     <th>Program Studi</th>
-                                                    <th>Angkatan</th>
+                                                    <th>Tahun</th>
                                                     <th>Jml. Simpan</th>
+                                                    <th>Jml. Hapus</th>
+                                                    <th>Jml. Duplicate</th>
                                                 </tr>
                                             </table>
                                         </div>
@@ -173,6 +175,9 @@ $tahun_min = $tahun_now - 3;
             </div>
         </div>
     </section>
+    <div class="modal01">
+
+    </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
 <script>
@@ -202,6 +207,8 @@ $tahun_min = $tahun_now - 3;
                 }
             }
 
+            // console.log(PRODI_AKT);
+
             proses_update()
         });
 
@@ -219,7 +226,7 @@ $tahun_min = $tahun_now - 3;
                 $('#pbarsapada').css('width', persen + '%');
                 $('#pbarsapada').attr('aria-valuenow', persen);
                 $.ajax({
-                    url: "<?= site_url('master/do-import-mhs'); ?>",
+                    url: "<?= site_url('master/do-import-cpl'); ?>",
                     type: "POST",
                     dataType: "json",
                     data: {
@@ -238,7 +245,7 @@ $tahun_min = $tahun_now - 3;
                         // $('.btn-update').html('<i class="fa fa-save text-white"></i> | Update CPL');
                     },
                     success: function(response) {
-                        var txt = '<tr><td>' + (NO + 1) + '</td><td>' + response.berhasil.nama_prodi + '</td><td>' + response.berhasil.angkatan + '</td><td align=center>' + response.berhasil.jumlah + '</td></tr>';
+                        var txt = '<tr><td>' + (NO + 1) + '</td><td>' + response.berhasil.nama_prodi + '</td><td>' + response.berhasil.tahun + '</td><td align=center>' + response.berhasil.jumlah + '</td><td align=center>' + response.berhasil.jumlah_missing + '</td><td align=center>' + response.berhasil.jumlah_duplicate + '</td></tr>';
                         $('.progress-import').append(txt);
                         NO++;
                         $('.csrf_pstwn').val(response.token);
@@ -281,44 +288,77 @@ $tahun_min = $tahun_now - 3;
 <script>
     function loadMhs() {
         var prodi = $(".filter-prd").val();
-        var angkatan = $(".filter-thn").val();
+        var tahun = $(".filter-thn").val();
 
-        dataTabel(prodi, angkatan);
+        dataTabel(prodi, tahun);
     }
 
 
-    function dataTabel(prodi = $(".filter-prd").val(), angkatan = $(".filter-thn").val()) {
+    function dataTabel(prodi = $(".filter-prd").val(), tahun = $(".filter-thn").val()) {
         nomor = 0;
+
         $('#table-10').DataTable({
             destroy: true,
             "ajax": {
-                url: "<?= base_url('dinamis/load-mstr-mahasiswa'); ?>",
+                url: "<?= base_url('dinamis/load-mstr-cpl'); ?>",
                 type: "POST",
                 data: {
                     prodi: prodi,
-                    angkatan: angkatan
+                    tahun: tahun
                 },
             },
             "columns": [{
-                    data: 'nomor'
+                    data: "nomor_cpl"
                 },
                 {
-                    data: "nim"
+                    data: "deskripsi"
                 },
                 {
-                    data: "nama_mhs"
+                    data: "tahun"
                 },
                 {
-                    data: "angkatan"
+                    data: "status"
                 },
                 {
-                    data: "nama_prodi"
-                },
-                {
-                    data: "email"
+                    "mData": null,
+                    "bSortable": false,
+                    "mRender": function(data, type, full) {
+                        return '<button value="' + full['id_cpl'] + '" class="btn btn-sm btn-warning" onclick="editCPL(this.value);">edit</button>';
+                    },
                 }
             ],
         })
+    }
+</script>
+
+<script>
+    function editCPL(id_cpl) {
+        $.ajax({
+            url: "<?= site_url('dinamis/load-modal-cpl'); ?>",
+            type: "POST",
+            dataType: "json",
+            data: {
+                id_cpl: id_cpl
+            },
+            dataType: "json",
+            beforeSend: function() {
+                // $('.btn-simpan').prop('disabled', true);
+                // $('.btn-simpan').html('<i class="fa fa-spin fa-spinner"></i> Mohon tunggu ...');
+                // $('.tabelrekap').html('');
+            },
+            complete: function() {
+                // $('.btn-update').prop('disabled', false);
+                // $('.btn-update').html('<i class="fa fa-save text-white"></i> | Update CPL');
+            },
+            success: function(response) {
+                $(".modal01").html(response.data);
+                $(".bd-example-modal-lg").modal('show');
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+                alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
+            }
+        });
+        return false;
     }
 </script>
 

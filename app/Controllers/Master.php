@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Models\CplModel;
 use App\Models\DosenkelasModel;
 use App\Models\DosenModel;
 use App\Models\KelaskuliahModel;
@@ -11,6 +12,7 @@ use App\Models\MatakuliahModel;
 use App\Models\PenggunaModel;
 use App\Models\PeriodeModel;
 use App\Models\PesertakelasModel;
+use CodeIgniter\I18n\Time;
 
 class Master extends BaseController
 {
@@ -24,6 +26,7 @@ class Master extends BaseController
     protected $kelasModel;
     protected $dosenklsModel;
     protected $pesertaklsModel;
+    protected $cplModel;
 
     public function __construct()
     {
@@ -36,6 +39,7 @@ class Master extends BaseController
         $this->kelasModel = new KelaskuliahModel();
         $this->dosenklsModel = new DosenkelasModel();
         $this->pesertaklsModel = new PesertakelasModel();
+        $this->cplModel = new CplModel();
     }
 
     public function v_mahasiswa(): string
@@ -517,8 +521,6 @@ class Master extends BaseController
         $data = [
             'halaman' => ['master-kurikulum', 'master-cpl'],
             'lembaga' => $data_lembaga
-
-
         ];
 
         return view('master/cpl/cpl', $data);
@@ -535,5 +537,78 @@ class Master extends BaseController
         ];
         // dd($data_mahasiswa);
         return view('master/cpl/detail_mk', $data);
+    }
+
+
+    function do_import_cpl()
+    {
+        if ($this->request->isAJAX()) {
+            $tahun = $this->request->getPost('angkatan');
+            $id_lembaga = $this->request->getPost('prodi');
+            $lembaga = $this->lmbgModel->where('id_lembaga', $id_lembaga)->first();
+            $cpl_prodi_tahun = get_cpl($id_lembaga, $tahun);
+
+            $data_tersimpan = $this->cplModel->where('id_lembaga', $id_lembaga)->where('tahun_cpl', $tahun)->findAll();
+            $cpl = [];
+            foreach ($data_tersimpan as $i => $val) {
+                $idcpl = $val['id_cpl'];
+                $cpl[$idcpl] = $val;
+            }
+            $timeNow = Time::now('Asia/Jakarta', 'en_US');
+            $kode_sync = $timeNow->getTimestamp();
+            $jml_simpan = 0;
+            $jml_duplicate = 0;
+            if ($cpl_prodi_tahun['success'] == true) {
+                foreach ($cpl_prodi_tahun['rows'] as $key => $val) {
+                    $idcpl = $val['id'];
+                    // Untuk cek apakah cpl sudah didlm tabel spada?
+                    if (!empty($cpl[$idcpl])) {
+                        $this->cplModel->perbarui($idcpl, $val['nomor_cpl'], $val['nama'],  $id_lembaga,  $val['tahun'], $val['target'], $val['batas'], $kode_sync, $val['is_aktif']);
+                    } else {
+                        $jml_simpan++;
+                        $duplicate = $this->cplModel->where('id_cpl', $idcpl)->countAllResults();
+                        if ($duplicate > 0) {
+                            $jml_duplicate++;
+                        } else {
+                            $this->cplModel->simpan($idcpl, $val['nomor_cpl'], $val['nama'],  $id_lembaga,  $val['tahun'], $val['target'], $val['batas'], $kode_sync, $val['is_aktif']);
+                        }
+                    }
+                }
+            } else {
+                $jml_simpan = 0;
+            }
+
+
+            $jml_missing = 0;
+            $count_missing =  $this->cplModel->where('id_lembaga', $id_lembaga)
+                ->where('tahun_cpl', $tahun)
+                ->where('kode_sync !=', $kode_sync)
+                ->countAllResults();
+            if ($count_missing > 0) {
+                $cpl_missing =  $this->cplModel->where('id_lembaga', $id_lembaga)
+                    ->where('tahun_cpl', $tahun)
+                    ->where('kode_sync !=', $kode_sync)
+                    ->findAll();
+                foreach ($cpl_missing as $key => $value) {
+                    $jml_missing++;
+                    $this->cplModel->hapus($value['id_cpl']);
+                }
+            }
+
+            $msg = [
+                'berhasil' => [
+                    'jumlah' => $jml_simpan,
+                    'jumlah_missing' => $jml_missing,
+                    'jumlah_duplicate' => $jml_duplicate,
+                    'id_lembaga' => $id_lembaga,
+                    'tahun' => $tahun,
+                    'nama_prodi' => $lembaga['nama_prodi']
+                ],
+                'token' => csrf_hash()
+            ];
+            echo json_encode($msg);
+        } else {
+            exit('Mohon maaf, tidak dapat diproses');
+        }
     }
 }

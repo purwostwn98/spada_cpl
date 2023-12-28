@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Models\CplModel;
 use App\Models\DosenkelasModel;
 use App\Models\KelaskuliahModel;
 use App\Models\LembagaModel;
@@ -19,6 +20,7 @@ class Dinamis extends BaseController
     protected $kelasModel;
     protected $dosenklsModel;
     protected $pesertaklsModel;
+    protected $cplModel;
 
     public function __construct()
     {
@@ -29,6 +31,7 @@ class Dinamis extends BaseController
         $this->kelasModel = new KelaskuliahModel();
         $this->dosenklsModel = new DosenkelasModel();
         $this->pesertaklsModel = new PesertakelasModel();
+        $this->cplModel = new CplModel();
     }
 
     public function load_mstr_mahasiswa()
@@ -188,6 +191,32 @@ class Dinamis extends BaseController
         }
     }
 
+    //Cpl
+    public function load_mstr_cpl()
+    {
+
+        if ($this->request->isAJAX()) {
+            $tahun = $this->request->getPost('tahun');
+            $id_lembaga = $this->request->getPost('prodi');
+
+            if ($tahun == null) {
+                $data = $this->cplModel->where('id_cpl', 0)->findAll();
+            } else {
+                $data = $this->cplModel->where('id_lembaga', $id_lembaga)->where('tahun_cpl', $tahun)->findAll();
+            }
+
+            $data_tampil = [];
+            foreach ($data as $ind => $val) {
+                $data_tampil[] = array('nomor_cpl' => $val['nomor_cpl'], 'deskripsi' => $val['deskripsi_cpl'], 'tahun' => $val['tahun_cpl'], 'status' => $val['is_active'], 'id_cpl' => $val['id_cpl'], 'nomor' => $ind + 1);
+            }
+
+            $msg['data'] = $data_tampil;
+            echo json_encode($msg);
+        } else {
+            echo ("Maaf perintah anda tidak dapat diproses");
+        }
+    }
+
     function load_modal_cpmk()
     {
 
@@ -199,6 +228,25 @@ class Dinamis extends BaseController
             ];
             $msg = [
                 'data' => view('dinamis/modal_cpmk', $data)
+            ];
+            echo json_encode($msg);
+        } else {
+            exit("Maaf tidak dapat diproses");
+        }
+    }
+
+    function load_modal_cpl()
+    {
+
+        if ($this->request->isAJAX()) {
+            $id_cpl = $this->request->getPost('id_cpl');
+            $row = $this->cplModel->where('id_cpl', $id_cpl)->first();
+            $data = [
+                'cpl' => $row,
+                'id_cpl' => $id_cpl
+            ];
+            $msg = [
+                'data' => view('dinamis/modal_edit_cpl', $data)
             ];
             echo json_encode($msg);
         } else {

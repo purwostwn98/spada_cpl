@@ -34,8 +34,9 @@ class Auth extends BaseController
             'kaprodi' => $kaprodi
         ];
         $_SESSION['userdata'] =  $data_session;
+        $_SESSION['token_kurikulum'] =  get_token_kurikulum()['access'];
         if ($_SESSION['userdata']['kode_jabatan'] == 1) {
-            return redirect()->to('/');
+            return redirect()->to('/home_adm');
         } elseif ($_SESSION['userdata']['kode_jabatan'] == 8) {
             return redirect()->to('/dosen/home');
         } elseif ($_SESSION['userdata']['kode_jabatan'] == 10) {

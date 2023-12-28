@@ -96,11 +96,14 @@ $kaprodi = $userSession['kaprodi'];
                         <ul class="sidebar-menu mt-4">
                             <li class="menu-header">Dashboard</li>
                             <li class="nav-item <?= $halaman[1] == 'home' ? 'active' : ''; ?>">
-                                <a href="/" class="nav-link"><i class="fas fa-hamburger"></i><span>Home</span></a>
+                                <a href="/home_adm" class="nav-link"><i class="fas fa-hamburger"></i><span>Home</span></a>
                             </li>
                             <li class="menu-header">Course</li>
-                            <li class="nav-item <?= $halaman[1] == 'semua-course' ? 'active' : ''; ?>">
-                                <a href="/courseadm/semua-course" class="nav-link"><i class="fas fa-book"></i> <span>Semua Course</span></a>
+                            <li class="nav-item <?= $halaman[1] == 'salin-course' ? 'active' : ''; ?>">
+                                <a href="/courseadm/salin-course" class="nav-link"><i class="fas fa-book"></i> <span>Salin Course</span></a>
+                            </li>
+                            <li class="nav-item <?= $halaman[1] == 'buat-course' ? 'active' : ''; ?>">
+                                <a href="/courseadm/buat-course" class="nav-link"><i class="fas fa-book"></i> <span>Buat Course</span></a>
                             </li>
                             <li class="nav-item dropdown">
                                 <a href="#" class="nav-link" data-toggle="dropdown"><i class="fas fa-archive"></i> <span>Master Course</span></a>

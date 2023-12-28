@@ -66,7 +66,7 @@
                 <div class="card">
                     <div class="card-body">
                         <table class="table">
-                            <tr class="bg-info text-white">
+                            <tr class="bg-primary text-white">
                                 <th>CPL</th>
                                 <th>Deskripsi</th>
                                 <th>Nilai</th>
@@ -74,13 +74,33 @@
                             <tbody>
                                 <tr>
                                     <td>1</td>
-                                    <td>Ratione eos aliquid quibusdam hic pariatur harum corporis, exercitationem saepe provident minus.</td>
-                                    <td>80</td>
+                                    <td>Mampu menerapkan pengetahuan dalam bidang ilmu matematika, sains dasar, teknologi informasi, dan bidang ilmu pelengkap yang menjadi dasar pengetahuan pada bidang ilmu teknik elektro, dengan kinerja bermutu dan terukur.</td>
+                                    <td>70</td>
                                 </tr>
                                 <tr>
                                     <td>2</td>
-                                    <td> dicta officiis commodi in non modi quam voluptatem enim fugit.</td>
+                                    <td>Mampu merancang sistem bidang ketenagalistrikan, elektronika dan komputer dalam batasan-batasan faktor-faktor ekonomi, keselamatan kerja dan lingkungan untuk memanfaatkan potensi sumber daya lokal dan nasional.</td>
+                                    <td>80</td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>Mampu mendesain dan melaksanakan eksperimen di laboratorium dan/atau lapangan, menganalisis data, menarik kesimpulan, serta menuangkan dalam bentuk laporan sebagai bagian dari penyelesaian permasalahan engineering yang kompleks.</td>
+                                    <td>80</td>
+                                </tr>
+                                <tr>
+                                    <td>4</td>
+                                    <td>Mampu mengidentifikasi, memformulasikan, menganalisis, dan menyelesaikan permasalahan dalam bidang sistem tenaga listrik, elektronika dan komputer.</td>
                                     <td>90</td>
+                                </tr>
+                                <tr class="bg-warning">
+                                    <td>5</td>
+                                    <td>Mampu menerapkan metode, dan teknologi terkini dengan terampil dalam melaksanakan pekerjaan yang berhubungan dengan sistem tenaga listrik, elektronika dan komputer baik secara mandiri atau dalam tim.</td>
+                                    <td>30</td>
+                                </tr>
+                                <tr class="bg-warning">
+                                    <td>6</td>
+                                    <td>Mampu melakukan komunikasi secara efektif baik tulisan maupun lisan menggunakan teknik komunikasi dan teknologi terbaru dalam rangka menyelesaikan permasalahan yang dihadapi.</td>
+                                    <td>30</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -102,18 +122,18 @@
             labels: ['CPL.1', 'CPL.2', 'CPL.3', 'CPL.4', 'CPL.5', 'CPL.6'],
             datasets: [{
                     label: 'batas min.',
-                    data: [12, 19, 3, 5, 2, 3],
+                    data: [50, 50, 50, 50, 50, 50],
                     borderWidth: 1,
                     backgroundColor: 'rgba(255, 99, 132, 0.5)'
                 }, {
                     label: 'CPL terpenuhi',
-                    data: [4, 7, 25, 7, 2, 3],
+                    data: [70, 80, 80, 90, 30, 30],
                     borderWidth: 1,
                     backgroundColor: 'rgba(54, 162, 235)'
                 },
                 {
                     label: 'target',
-                    data: [9, 10, 12, 14, 15, 17],
+                    data: [68, 68, 68, 68, 68, 68],
                     borderWidth: 1,
                     backgroundColor: 'rgba(115, 243, 98, 0.5)'
                 }

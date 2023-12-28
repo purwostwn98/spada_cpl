@@ -118,21 +118,21 @@
     new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+            labels: ['CPL.1', 'CPL.2', 'CPL.3', 'CPL.4', 'CPL.5', 'CPL.6'],
             datasets: [{
                     label: 'batas min.',
-                    data: [12, 19, 3, 5, 2, 3],
+                    data: [50, 50, 50, 50, 50, 50],
                     borderWidth: 1,
                     backgroundColor: 'rgba(255, 99, 132, 0.5)'
                 }, {
                     label: 'CPL terpenuhi',
-                    data: [4, 7, 25, 7, 2, 3],
+                    data: [70, 80, 80, 90, 30, 30],
                     borderWidth: 1,
                     backgroundColor: 'rgba(54, 162, 235)'
                 },
                 {
                     label: 'target',
-                    data: [9, 10, 12, 14, 15, 17],
+                    data: [68, 68, 68, 68, 68, 68],
                     borderWidth: 1,
                     backgroundColor: 'rgba(115, 243, 98, 0.5)'
                 }
