@@ -2,7 +2,7 @@
 <?= $this->section("konten"); ?>
 <?php
 $tahun_now = date('Y');
-$tahun_min = $tahun_now - 8;
+$tahun_min = $tahun_now - 3;
 ?>
 <div class="main-content">
     <section class="section">
@@ -24,19 +24,30 @@ $tahun_min = $tahun_now - 8;
                                     <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Data Spada</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Import dari Siakad</a>
+                                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Import dari Kurikulum</a>
                                 </li>
                             </ul>
                             <div class="tab-content" id="myTabContent">
                                 <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                                     <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>Tahun Kurikulum</label>
+                                                <select class="form-control filterthn" id="flter1" onchange="loadMk()">
+                                                    <option value="is_active" selected>Kurikulum Aktif</option>
+                                                    <?php for ($i = $tahun_now; $i > $tahun_min; $i--) { ?>
+                                                        <option value="<?= $i; ?>"><?= $i; ?></option>
+                                                    <?php  } ?>
+                                                </select>
+                                            </div>
+                                        </div>
                                         <div class="col-md-8">
                                             <div class="form-group">
                                                 <label>Program Studi</label>
-                                                <select class="form-control select2 filter-prd" name="filter_prd" onchange="loadMk()">
+                                                <select class="form-control select2 filterprd" id="fltr2" onchange="loadMk()">
                                                     <option value="" disabled selected></option>
                                                     <?php foreach ($lembaga as $key => $val) { ?>
-                                                        <option <?= $val['kode_prodi'] == '26201' ? 'selected' : ''; ?> value="<?= $val['kode_prodi']; ?>"><?= $val['nama_prodi']; ?></option>
+                                                        <option value="<?= $val['id_lembaga']; ?>"><?= $val['nama_prodi']; ?></option>
                                                     <?php  } ?>
                                                 </select>
                                             </div>
@@ -50,13 +61,13 @@ $tahun_min = $tahun_now - 8;
                                                         <table class="table table-striped" id="table-10">
                                                             <thead>
                                                                 <tr>
-                                                                    <th class="text-center">
+                                                                    <th width="10%" class="text-center">
                                                                         #
                                                                     </th>
-                                                                    <th>Kode</th>
-                                                                    <th>Nama</th>
-                                                                    <th>SKS</th>
-                                                                    <th>Program Studi</th>
+                                                                    <th width="15%">Kode</th>
+                                                                    <th width="50%">Nama</th>
+                                                                    <th width="10%">SKS</th>
+                                                                    <th width="15%">Tahun Kurikulum</th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
@@ -72,10 +83,39 @@ $tahun_min = $tahun_now - 8;
                                 <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                                     <?= form_open("/master/do-import-mhs", ['class' => 'formmhs']); ?>
                                     <div class="form container">
+                                        <label class="d-block text-primary"><strong>Pilihan Tahun Kurikulum</strong></label>
+
+                                        <div class="form-check">
+                                            <input class="form-check-input checkAll" onclick="checkAllAkt(this.checked);" type="checkbox" id="checkAllAngkatan" name="checkAllAngkatan" value="#">
+                                            <label class="form-check-label" for="checkAllAngkatan">
+                                                <b> Pilih Semua Tahun </b>
+                                            </label>
+                                        </div>
+
+                                        <div class="row">
+                                            <?php for ($i = $tahun_now; $i >= $tahun_min; $i--) { ?>
+                                                <div class="col-lg-3">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input checkAngkatan" type="checkbox" id="<?= $i; ?>" name="pilihangkatan[]" value="<?= $i; ?>">
+                                                        <label class="form-check-label" for="<?= $i; ?>">
+                                                            <?= $i; ?>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            <?php } ?>
+                                            <div class="col-lg-3">
+                                                <div class="form-check">
+                                                    <input class="form-check-input checkAngkatan" type="checkbox" id="tahun_aktif" name="pilihangkatan[]" value="19011998">
+                                                    <label class="form-check-label" for="tahun_aktif">
+                                                        Kurikulum Aktif
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
                                         <label class="d-block text-primary"><strong>Pilihan Program Studi</strong></label>
                                         <div class="form-check">
                                             <input class="form-check-input" onclick="checkAllPrd(this.checked);" type="checkbox" id="checkAllProdi" name="checkAllProdi" value="#">
-                                            <label class="form-check-label text-warning" for="checkAllProdi">
+                                            <label class="form-check-label" for="checkAllProdi">
                                                 <b> Pilih Semua Program Studi</b>
                                             </label>
                                         </div>
@@ -83,7 +123,7 @@ $tahun_min = $tahun_now - 8;
                                             <?php foreach ($lembaga as $key => $value) { ?>
                                                 <div class="col-lg-6">
                                                     <div class="form-check">
-                                                        <input class="form-check-input checkProdi" type="checkbox" value="<?= $value['kode_prodi']; ?>" id="<?= $value['kode_prodi']; ?>" name="programstudi[]">
+                                                        <input class="form-check-input checkProdi" type="checkbox" value="<?= $value['id_lembaga']; ?>" id="<?= $value['kode_prodi']; ?>" name="programstudi[]">
                                                         <label class="form-check-label" for="<?= $value['kode_prodi']; ?>">
                                                             <?= $value['nama_prodi']; ?>
                                                         </label>
@@ -94,7 +134,7 @@ $tahun_min = $tahun_now - 8;
                                         <br>
                                         <div class="row">
                                             <div class="col-12 content-align-center">
-                                                <button class="btn btn-warning btn-simpan" type="button">Import Data Siakad</button>
+                                                <button class="btn btn-warning btn-simpan" type="button">Import Data Kurikulum</button>
                                             </div>
                                         </div>
                                     </div>
@@ -144,10 +184,23 @@ $tahun_min = $tahun_now - 8;
             $('#pbarsapada').attr('aria-valuenow', '0');
 
 
-            PRODI = Array();
+            var PRODI = Array();
             $('.checkProdi:checked').each(function() {
                 PRODI.push($(this).val());
             });
+            const ANGKATAN = [];
+            $('.checkAngkatan:checked').each(function() {
+                ANGKATAN.push($(this).val());
+            });
+            PRODI_AKT = [];
+            PRODI.forEach(myProdi);
+
+            function myProdi(prd, index) {
+                for (let i = 0; i < ANGKATAN.length; i++) {
+                    PRODI_AKT.push([prd, ANGKATAN[i]]);;
+                }
+            }
+            // console.log(PRODI_AKT);
 
             proses_update()
         });
@@ -156,11 +209,12 @@ $tahun_min = $tahun_now - 8;
 
         function proses_update() {
             var p = NO + 1;
-            var persen = (p / PRODI.length) * 100;
+            var persen = (p / PRODI_AKT.length) * 100;
             var csrfName = $('.csrf_pstwn').attr('name'); // CSRF Token name
             var csrfHash = $('.csrf_pstwn').val(); // CSRF hash
-            if (NO < PRODI.length) {
-                var prodi = PRODI[NO];
+            if (NO < PRODI_AKT.length) {
+                var prodi = PRODI_AKT[NO][0];
+                var angkatan = PRODI_AKT[NO][1];
                 $('#pbarsapadaspan').text(persen + '%');
                 $('#pbarsapada').css('width', persen + '%');
                 $('#pbarsapada').attr('aria-valuenow', persen);
@@ -170,6 +224,7 @@ $tahun_min = $tahun_now - 8;
                     dataType: "json",
                     data: {
                         prodi: prodi,
+                        tahun_kurikulum: angkatan,
                         [csrfName]: csrfHash
                     },
                     dataType: "json",
@@ -219,13 +274,17 @@ $tahun_min = $tahun_now - 8;
 
 <script>
     function loadMk() {
-        var prodi = $(".filter-prd").val();
-        dataTabel(prodi);
+        var prodi = $(".filterprd").val();
+        var tahun = $(".filterthn").val();
+        // alert(prodi);
+
+        dataTabel(prodi, tahun);
     }
 
 
-    function dataTabel(prodi = $(".filter-prd").val()) {
+    function dataTabel(prodi = $(".filterprd").val(), tahun = $(".filterthn").val()) {
         nomor = 0;
+
         $('#table-10').DataTable({
             destroy: true,
             "ajax": {
@@ -233,6 +292,7 @@ $tahun_min = $tahun_now - 8;
                 type: "POST",
                 data: {
                     prodi: prodi,
+                    tahun: tahun
                 },
             },
             "columns": [{
@@ -248,7 +308,7 @@ $tahun_min = $tahun_now - 8;
                     data: "sks_mk"
                 },
                 {
-                    data: "nama_prodi"
+                    data: "tahun_kurikulum"
                 }
             ],
         })

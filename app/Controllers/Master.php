@@ -3,6 +3,8 @@
 namespace App\Controllers;
 
 use App\Models\CplModel;
+use App\Models\CpmkModel;
+use App\Models\CpmkcplModel;
 use App\Models\DosenkelasModel;
 use App\Models\DosenModel;
 use App\Models\KelaskuliahModel;
@@ -27,6 +29,8 @@ class Master extends BaseController
     protected $dosenklsModel;
     protected $pesertaklsModel;
     protected $cplModel;
+    protected $cpmkModel;
+    protected $cpmkcplModel;
 
     public function __construct()
     {
@@ -40,6 +44,8 @@ class Master extends BaseController
         $this->dosenklsModel = new DosenkelasModel();
         $this->pesertaklsModel = new PesertakelasModel();
         $this->cplModel = new CplModel();
+        $this->cpmkModel = new CpmkModel();
+        $this->cpmkcplModel = new CpmkcplModel();
     }
 
     public function v_mahasiswa(): string
@@ -81,7 +87,7 @@ class Master extends BaseController
 
     function v_mk(): string
     {
-        $data_lembaga = $this->lmbgModel->groupBy('kode_prodi')->groupBy('nama_prodi')->select('kode_prodi')->select('nama_prodi')->findAll();
+        $data_lembaga = $this->lmbgModel->groupBy('kode_prodi, nama_prodi, id_lembaga')->select('kode_prodi, nama_prodi, id_lembaga')->findAll();
 
         $data = [
             'halaman' => ['master-akademik', 'master-mk'],
@@ -244,35 +250,34 @@ class Master extends BaseController
     public function do_import_mk()
     {
         if ($this->request->isAJAX()) {
-            $prodi = $this->request->getPost('prodi');
-            $lembaga = $this->lmbgModel->where('kode_prodi', $prodi)->first();
-            $mk_prodi = get_mk_prodi($prodi);
+            $id_lembaga = $this->request->getPost('prodi');
+            $tahun = intval($this->request->getPost('tahun_kurikulum'));
+            $lembaga = $this->lmbgModel->where('id_lembaga', $id_lembaga)->first();
+            $mk_prodi = get_mk_kurikulum($id_lembaga, $tahun);
 
-            if ($mk_prodi['success'] == 'false') {
-                $mk_prodi = [];
-            }
-
-            $data_tersimpan = $this->mkModel->where(['kdprodi_mk' => $prodi])->findAll();
+            $data_tersimpan = $this->mkModel->where(['idlembaga_mk' => $id_lembaga])->findAll();
             $mk = [];
             foreach ($data_tersimpan as $i => $val) {
-                $idmk = md5($val['kode_mk'] . $val['kdprodi_mk']);
+                $idmk = md5($val['kode_mk'] . $val['idlembaga_mk'] . $val['tahun_kurikulum']);
                 $mk[$idmk] = $val;
             }
 
             $jml_simpan = 0;
             if ($mk_prodi['success'] == 'true') {
-                foreach ($mk_prodi['rows'] as $key => $val) {
-                    $idmk = md5($val['kode_mk'] . $val['kode_prodi']);;
-                    // Untuk cek apakah mk sudah didlm tabel spada?
-                    if (!empty($mk[$idmk])) {
-                        $this->mkModel->update_mk($val['kode_mk'], $val['kode_prodi'], $val['nama_mk'], $val['sks_mk']);
-                    } else {
-                        $cek_double = $this->mkModel->where('id_mk', $idmk)->countAllResults();
-                        if ($cek_double == 0) {
-                            $jml_simpan++;
-                            $this->mkModel->simpan_mk($val['kode_mk'], $val['kode_prodi'], $val['nama_mk'], $val['sks_mk']);
+                foreach ($mk_prodi['rows'] as $key => $value) {
+                    foreach ($value as $id => $val) {
+                        $idmk = md5($val['kode_matakuliah'] . $id_lembaga . $val['tahun_kurikulum']);
+                        // Untuk cek apakah mk sudah didlm tabel spada?
+                        if (!empty($mk[$idmk])) {
+                            $this->mkModel->update_mk($val['kode_matakuliah'], $id_lembaga, $val['matakuliah'], $val['jml_sks'], $val['semester'], $val['tahun_kurikulum']);
                         } else {
-                            continue;
+                            $cek_double = $this->mkModel->where('id_mk', $idmk)->countAllResults();
+                            if ($cek_double == 0) {
+                                $jml_simpan++;
+                                $this->mkModel->simpan_mk($val['kode_matakuliah'], $id_lembaga, $val['matakuliah'], $val['jml_sks'], $val['semester'], $val['tahun_kurikulum']);
+                            } else {
+                                continue;
+                            }
                         }
                     }
                 }
@@ -283,7 +288,7 @@ class Master extends BaseController
             $msg = [
                 'berhasil' => [
                     'jumlah' => $jml_simpan,
-                    'kode_prodi' => $prodi,
+                    'kode_prodi' => $id_lembaga,
                     'nama_prodi' => $lembaga['nama_prodi']
                 ],
                 'token' => csrf_hash()
@@ -301,9 +306,7 @@ class Master extends BaseController
             $prodi = $this->request->getPost('prodi');
             $lembaga = $this->lmbgModel->where('kode_prodi', $prodi)->first();
             $kelas_kuliah = get_kelas_kuliah($periode, $prodi);
-            if (!$kelas_kuliah) {
-                $kelas_kuliah = [];
-            }
+
 
 
             $data_tersimpan = $this->kelasModel->where('kdprodi_kls', $prodi)->where('kdsmt_kls', $periode)
@@ -317,7 +320,8 @@ class Master extends BaseController
 
             // list_mk
             $list_mk = [];
-            $data_mk = $this->mkModel->where('kdprodi_mk', $prodi)->findAll();
+            $tahun_kurikulum = $this->mkModel->selectMax('tahun_kurikulum')->where('idlembaga_mk', $lembaga['id_lembaga'])->first();
+            $data_mk = $this->mkModel->where(['idlembaga_mk' => $lembaga['id_lembaga'], 'tahun_kurikulum' => $tahun_kurikulum['tahun_kurikulum']])->findAll();
             foreach ($data_mk as $key => $v) {
                 $list_mk[$v['id_mk']] = $v;
             }
@@ -328,11 +332,11 @@ class Master extends BaseController
             if ($kelas_kuliah['success'] == 'true') {
                 foreach ($kelas_kuliah['rows'] as $key => $val) {
                     $idkls = md5($val['periode'] . $val['kode_prodi'] . $val['kode_mk'] . $val['kelas']);
-                    $id_mk = md5($val['kode_mk'] . $val['kode_prodi']);
                     // Untuk cek apakah kelas sudah didlm tabel spada?
                     if (!empty($kelas[$idkls])) {
                         continue;
                     } else {
+                        $id_mk = md5($val['kode_mk'] . $lembaga['id_lembaga'] . $tahun_kurikulum['tahun_kurikulum']);
                         if (!empty($list_mk[$id_mk])) {
                             $cek_id = $this->kelasModel->where('id_kls', $idkls)->countAllResults();
                             if ($cek_id == 0) {
@@ -369,6 +373,8 @@ class Master extends BaseController
             $periode = $this->request->getPost('periode');
             $prodi = $this->request->getPost('prodi');
             $lembaga = $this->lmbgModel->where('kode_prodi', $prodi)->first();
+            $tahun_kurikulum = $this->mkModel->selectMax('tahun_kurikulum')->where('idlembaga_mk', $lembaga['id_lembaga'])->first();
+            $tahun_kurikulum = $tahun_kurikulum['tahun_kurikulum'];
             $dosen_kelas = get_dosen_kelas($periode, $prodi);
             if (!$dosen_kelas) {
                 $dosen_kelas = [];
@@ -406,7 +412,7 @@ class Master extends BaseController
             if ($dosen_kelas['success'] == 'true') {
                 foreach ($dosen_kelas['rows'] as $key => $val) {
                     $id_dsnkls = md5($val['periode'] . $val['kode_prodi'] . $val['kode_mk'] . $val['kelas'] . $val['iddsn']);
-                    $id_mk = md5($val['kode_mk'] . $val['kode_prodi']);
+                    $id_mk = md5($val['kode_mk'] . $lembaga['id_lembaga'] . $tahun_kurikulum);
                     $id_kls = md5($val['periode'] . $val['kode_prodi'] . $val['kode_mk'] . $val['kelas']);
                     // Untuk cek apakah kelas sudah didlm tabel spada?
                     if (!empty($dsn_kelas[$id_dsnkls])) {
@@ -449,9 +455,8 @@ class Master extends BaseController
             $prodi = $this->request->getPost('prodi');
             $lembaga = $this->lmbgModel->where('kode_prodi', $prodi)->first();
             $peserta_kelas = get_peserta_kelas($periode, $prodi);
-            if (!$peserta_kelas) {
-                $peserta_kelas = [];
-            }
+            $tahun_kurikulum = $this->mkModel->selectMax('tahun_kurikulum')->where('idlembaga_mk', $lembaga['id_lembaga'])->first();
+            $tahun_kurikulum = $tahun_kurikulum['tahun_kurikulum'];
 
 
             $data_tersimpan = $this->pesertaklsModel->where('kode_prodi', $prodi)->where('kode_smt', $periode)
@@ -477,7 +482,7 @@ class Master extends BaseController
                 foreach ($peserta_kelas['rows'] as $key => $val) {
                     $id_peserta = md5($val['periode'] . $val['kode_mk'] . $val['kelas'] . $val['nim']);
                     $id_kls = md5($val['periode'] . $val['kode_prodi'] . $val['kode_mk'] . $val['kelas']);
-                    $id_mk = md5($val['kode_mk'] . $val['kode_prodi']);
+                    $id_mk = md5($val['kode_mk'] . $lembaga['id_lembaga'] . $tahun_kurikulum);
                     // Untuk cek apakah kelas sudah didlm tabel spada?
                     if (!empty($peserta_kelas[$id_peserta])) {
                         continue;
@@ -538,7 +543,6 @@ class Master extends BaseController
         // dd($data_mahasiswa);
         return view('master/cpl/detail_mk', $data);
     }
-
 
     function do_import_cpl()
     {
@@ -602,6 +606,208 @@ class Master extends BaseController
                     'jumlah_duplicate' => $jml_duplicate,
                     'id_lembaga' => $id_lembaga,
                     'tahun' => $tahun,
+                    'nama_prodi' => $lembaga['nama_prodi']
+                ],
+                'token' => csrf_hash()
+            ];
+            echo json_encode($msg);
+        } else {
+            exit('Mohon maaf, tidak dapat diproses');
+        }
+    }
+
+    function do_import_cpmk()
+    {
+        // digunakan untuk import cpmk dan subcpmk
+        if ($this->request->isAJAX()) {
+            $id_lembaga = $this->request->getPost('prodi');
+            $tahun = intval($this->request->getPost('tahun_kurikulum'));
+            $lembaga = $this->lmbgModel->where('id_lembaga', $id_lembaga)->first();
+            if ($tahun == 'is_active') {
+                $tahun_max_kurikulum = $this->mkModel->selectMax('tahun_kurikulum')->where('idlembaga_mk', $id_lembaga)->first();
+                $tahun_kurikulum = $tahun_max_kurikulum['tahun_kurikulum'];
+            } else {
+                $tahun_kurikulum = $tahun;
+            }
+
+            $mk_prodi = $this->mkModel->where(['idlembaga_mk' => $id_lembaga, 'tahun_kurikulum' => $tahun_kurikulum])->findAll();
+            $jml_simpan = 0;
+            if (!empty($mk_prodi)) {
+                foreach ($mk_prodi as $key => $value) {
+                    $timeNow = Time::now('Asia/Jakarta', 'en_US');
+                    $kode_sync = $timeNow->getTimestamp();
+                    $kode_mk = $value['kode_mk'];
+                    $id_mk = $value['id_mk'];
+                    $data_cpmk_kurikulum = get_cpmk_kurikulum($kode_mk);
+                    $saved_cpmk = $this->cpmkModel->where('idmk_cpmk', $value['id_mk'])->findAll();
+                    $cpmk = [];
+                    foreach ($saved_cpmk as $k => $val) {
+                        $id_cpmk = $val['id_cpmk'];
+                        $cpmk[$id_cpmk] = $val;
+                    }
+                    if ($data_cpmk_kurikulum['success'] == true) {
+                        foreach ($data_cpmk_kurikulum['rows'] as $key => $val) {
+                            $id_cpmk = $val['id'];
+                            // Untuk cek apakah cpmk sudah didlm tabel spada?
+                            if (!empty($cpmk[$id_cpmk])) {
+                                $this->cpmkModel->perbarui($id_cpmk, $value['id_mk'], $val['nomor_cpmk'], $val['nama'], $val['bobot'], $kode_sync);
+                                foreach ($val['cpls'] as $c => $cpl) {
+                                    $count_conn = $this->cpmkcplModel->where('id_cpmk_cpl', md5($id_cpmk . '-' . $cpl['id']))->countAllResults();
+                                    if ($count_conn > 0) {
+                                        $this->cpmkcplModel->perbarui($id_cpmk, $cpl['id'], $kode_sync);
+                                    } else {
+                                        $this->cpmkcplModel->simpan($id_cpmk, $cpl['id'], $kode_sync);
+                                    }
+                                }
+                            } else {
+                                $jml_simpan++;
+                                $this->cpmkModel->simpan($id_cpmk, $id_mk, $val['nomor_cpmk'], $val['nama'], $val['bobot'], $kode_sync);
+                                foreach ($val['cpls'] as $c => $cpl) {
+                                    $this->cpmkcplModel->simpan($id_cpmk, $cpl['id'], $kode_sync);
+                                }
+                            }
+                            $missing_conn =  $this->cpmkcplModel->where('id_cpmk', $id_cpmk)
+                                ->where('cpmk_cpl_sync !=', $kode_sync)
+                                ->countAllResults();
+                            if ($missing_conn > 0) {
+                                $conn_missing =  $this->cpmkcplModel->where('id_cpmk', $id_cpmk)
+                                    ->where('cpmk_cpl_sync !=', $kode_sync)
+                                    ->findAll();
+                                foreach ($conn_missing as $key => $value) {
+                                    $this->cpmkcplModel->hapus($value['cpmk_cpl_sync']);
+                                }
+                            }
+                        }
+                        $missing_cpmk =  $this->cpmkModel->where('idmk_cpmk', $id_mk)
+                            ->where('cpmk_kode_sync !=', $kode_sync)
+                            ->countAllResults();
+                        if ($missing_cpmk > 0) {
+                            $cpmk_missing =  $this->cpmkModel->where('idmk_cpmk', $id_mk)
+                                ->where('cpmk_kode_sync !=', $kode_sync)
+                                ->findAll();
+                            foreach ($cpmk_missing as $key => $value) {
+                                $this->cpmkModel->hapus($value['id_cpmk']);
+                            }
+                        }
+                    }
+                }
+            } else {
+                $jml_simpan = 0;
+            }
+
+            $msg = [
+                'berhasil' => [
+                    'jumlah' => $jml_simpan,
+                    'kode_prodi' => $id_lembaga,
+                    'nama_prodi' => $lembaga['nama_prodi']
+                ],
+                'token' => csrf_hash()
+            ];
+            echo json_encode($msg);
+        } else {
+            exit('Mohon maaf, tidak dapat diproses');
+        }
+    }
+
+    function do_import_detilmk000()
+    {
+        // digunakan untuk import cpmk dan subcpmk
+        if ($this->request->isAJAX()) {
+            $id_lembaga = $this->request->getPost('prodi');
+            $tahun = intval($this->request->getPost('tahun_kurikulum'));
+            $lembaga = $this->lmbgModel->where('id_lembaga', $id_lembaga)->first();
+            if ($tahun == 'is_active') {
+                $tahun_max_kurikulum = $this->mkModel->selectMax('tahun_kurikulum')->where('idlembaga_mk', $id_lembaga)->first();
+                $tahun_kurikulum = $tahun_max_kurikulum['tahun_kurikulum'];
+            } else {
+                $tahun_kurikulum = $tahun;
+            }
+
+            $mk_prodi = $this->mkModel->where(['idlembaga_mk' => $id_lembaga, 'tahun_kurikulum' => $tahun_kurikulum])->findAll();
+            $data_mk = [];
+            foreach ($mk_prodi as $key => $v) {
+                $data_mk[$v['id_mk']] = $v;
+            }
+
+            $get_detil_mk = get_mk_subcpmk($id_lembaga);
+            if ($get_detil_mk['success'] == true) {
+                foreach ($get_detil_mk['rows'] as $i => $matkul) {
+                    $id_mk = md5($matkul['kode_mk'] . $id_lembaga . $matkul['tahun']);
+                    if (!empty($data_mk[$id_mk])) {
+                        $saved_cpmk = $this->cpmkModel->where('idmk_cpmk', $id_mk)->findAll();
+                    }
+                }
+            }
+
+
+            $jml_simpan = 0;
+            if (!empty($mk_prodi)) {
+                foreach ($mk_prodi as $key => $value) {
+                    $timeNow = Time::now('Asia/Jakarta', 'en_US');
+                    $kode_sync = $timeNow->getTimestamp();
+                    $kode_mk = $value['kode_mk'];
+                    $id_mk = $value['id_mk'];
+                    $data_cpmk_kurikulum = get_cpmk_kurikulum($kode_mk);
+                    $saved_cpmk = $this->cpmkModel->where('idmk_cpmk', $value['id_mk'])->findAll();
+                    $cpmk = [];
+                    foreach ($saved_cpmk as $k => $val) {
+                        $id_cpmk = $val['id_cpmk'];
+                        $cpmk[$id_cpmk] = $val;
+                    }
+                    if ($data_cpmk_kurikulum['success'] == true) {
+                        foreach ($data_cpmk_kurikulum['rows'] as $key => $val) {
+                            $id_cpmk = $val['id'];
+                            // Untuk cek apakah cpmk sudah didlm tabel spada?
+                            if (!empty($cpmk[$id_cpmk])) {
+                                $this->cpmkModel->perbarui($id_cpmk, $value['id_mk'], $val['nomor_cpmk'], $val['nama'], $val['bobot'], $kode_sync);
+                                foreach ($val['cpls'] as $c => $cpl) {
+                                    $count_conn = $this->cpmkcplModel->where('id_cpmk_cpl', md5($id_cpmk . '-' . $cpl['id']))->countAllResults();
+                                    if ($count_conn > 0) {
+                                        $this->cpmkcplModel->perbarui($id_cpmk, $cpl['id'], $kode_sync);
+                                    } else {
+                                        $this->cpmkcplModel->simpan($id_cpmk, $cpl['id'], $kode_sync);
+                                    }
+                                }
+                            } else {
+                                $jml_simpan++;
+                                $this->cpmkModel->simpan($id_cpmk, $id_mk, $val['nomor_cpmk'], $val['nama'], $val['bobot'], $kode_sync);
+                                foreach ($val['cpls'] as $c => $cpl) {
+                                    $this->cpmkcplModel->simpan($id_cpmk, $cpl['id'], $kode_sync);
+                                }
+                            }
+                            $missing_conn =  $this->cpmkcplModel->where('id_cpmk', $id_cpmk)
+                                ->where('cpmk_cpl_sync !=', $kode_sync)
+                                ->countAllResults();
+                            if ($missing_conn > 0) {
+                                $conn_missing =  $this->cpmkcplModel->where('id_cpmk', $id_cpmk)
+                                    ->where('cpmk_cpl_sync !=', $kode_sync)
+                                    ->findAll();
+                                foreach ($conn_missing as $key => $value) {
+                                    $this->cpmkcplModel->hapus($value['cpmk_cpl_sync']);
+                                }
+                            }
+                        }
+                        $missing_cpmk =  $this->cpmkModel->where('idmk_cpmk', $id_mk)
+                            ->where('cpmk_kode_sync !=', $kode_sync)
+                            ->countAllResults();
+                        if ($missing_cpmk > 0) {
+                            $cpmk_missing =  $this->cpmkModel->where('idmk_cpmk', $id_mk)
+                                ->where('cpmk_kode_sync !=', $kode_sync)
+                                ->findAll();
+                            foreach ($cpmk_missing as $key => $value) {
+                                $this->cpmkModel->hapus($value['id_cpmk']);
+                            }
+                        }
+                    }
+                }
+            } else {
+                $jml_simpan = 0;
+            }
+
+            $msg = [
+                'berhasil' => [
+                    'jumlah' => $jml_simpan,
+                    'kode_prodi' => $id_lembaga,
                     'nama_prodi' => $lembaga['nama_prodi']
                 ],
                 'token' => csrf_hash()

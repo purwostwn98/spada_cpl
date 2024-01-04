@@ -58,3 +58,25 @@ function get_cpl($id_lembaga, $tahun)
     $url = 'v1/prodi/' . $id_lembaga . '/cpl?tahun=' . $tahun;
     return akses_kurikulum($url);
 }
+
+function get_mk_kurikulum($id_lembaga, $tahun)
+{
+    if ($tahun == 19011998) {
+        $url = 'v1/prodi/' . $id_lembaga . '/matakuliah';
+    } else {
+        $url = 'v1/prodi/' . $id_lembaga . '/matakuliah?tahun=' . $tahun;
+    }
+    return akses_kurikulum($url);
+}
+
+function get_cpmk_kurikulum($kode_mk)
+{
+    $url = 'v1/matakuliah/' . $kode_mk . '/cpmk';
+    return akses_kurikulum($url);
+}
+
+function get_mk_subcpmk($id_lembaga)
+{
+    $url = 'v1/prodi/' . $id_lembaga . '/matakuliah_with_cpmk';
+    return akses_kurikulum($url);
+}

@@ -3,6 +3,8 @@
 namespace App\Controllers;
 
 use App\Models\CplModel;
+use App\Models\CpmkModel;
+use App\Models\CpmkcplModel;
 use App\Models\DosenkelasModel;
 use App\Models\KelaskuliahModel;
 use App\Models\LembagaModel;
@@ -21,6 +23,8 @@ class Dinamis extends BaseController
     protected $dosenklsModel;
     protected $pesertaklsModel;
     protected $cplModel;
+    protected $cpmkModel;
+    protected $cpmkcplModel;
 
     public function __construct()
     {
@@ -32,6 +36,8 @@ class Dinamis extends BaseController
         $this->dosenklsModel = new DosenkelasModel();
         $this->pesertaklsModel = new PesertakelasModel();
         $this->cplModel = new CplModel();
+        $this->cpmkModel = new CpmkModel();
+        $this->cpmkcplModel = new CpmkcplModel();
     }
 
     public function load_mstr_mahasiswa()
@@ -65,13 +71,20 @@ class Dinamis extends BaseController
 
         if ($this->request->isAJAX()) {
             $prodi = $this->request->getPost('prodi');
+            $tahun = 'is_active';
+            if ($tahun == 'is_active') {
+                $tahun_max_kurikulum = $this->mkModel->selectMax('tahun_kurikulum')->where('idlembaga_mk', $prodi)->first();
+                $tahun_kurikulum = $tahun_max_kurikulum['tahun_kurikulum'];
+            } else {
+                $tahun_kurikulum = $tahun;
+            }
 
-            $data_mk = $this->mkModel->where('kdprodi_mk', $prodi)
-                ->join('mstr_lembaga as lmbg', 'mstr_matkul.kdprodi_mk = lmbg.kode_prodi')->findAll();
+            $data_mk = $this->mkModel->where(['idlembaga_mk' => $prodi, 'tahun_kurikulum' => $tahun_kurikulum])
+                ->join('mstr_lembaga as lmbg', 'mstr_matkul.idlembaga_mk = lmbg.id_lembaga')->findAll();
 
             $ar_mk = [];
             foreach ($data_mk as $ind => $val) {
-                $ar_mk[] = array('id_mk' => $val['id_mk'], 'kode_mk' => $val['kode_mk'], 'nama_mk' => $val['nama_mk'], 'nama_prodi' => $val['nama_prodi'], 'sks_mk' => $val['sks_mk'], 'nomor' => $ind + 1);
+                $ar_mk[] = array('id_mk' => $val['id_mk'], 'kode_mk' => $val['kode_mk'], 'nama_mk' => $val['nama_mk'], 'nama_prodi' => $val['nama_prodi'], 'sks_mk' => $val['sks_mk'], 'nomor' => $ind + 1, 'tahun_kurikulum' => $val['tahun_kurikulum']);
             }
             $msg['data'] = $ar_mk;
             echo json_encode($msg);
@@ -125,7 +138,7 @@ class Dinamis extends BaseController
             $prodi = $this->request->getPost('prodi');
 
             if ($prodi == null) {
-                $data_dsnkls = $this->dosenklsModel->where('kode_smt', $periode)
+                $data_dsnkls = $this->dosenklsModel->where('mstr_dosen_kelas.kode_smt', $periode)
                     ->join('mstr_matkul as mk', 'mk.id_mk = mstr_dosen_kelas.id_mk')
                     ->join('mstr_kelas_kuliah as kls', 'kls.id_kls = mstr_dosen_kelas.id_kls')
                     ->join('mstr_dosen as dsn', 'dsn.id_dsn = mstr_dosen_kelas.id_dsn')
@@ -133,7 +146,7 @@ class Dinamis extends BaseController
                     ->orderBy('nama_dsn')
                     ->findAll();
             } else {
-                $data_dsnkls = $this->dosenklsModel->where('kode_smt', $periode)->wher('kode_prodi', $prodi)
+                $data_dsnkls = $this->dosenklsModel->where(['mstr_dosen_kelas.kode_smt' => $periode, 'mstr_dosen_kelas.kode_prodi' => $prodi])
                     ->join('mstr_matkul as mk', 'mk.id_mk = mstr_dosen_kelas.id_mk')
                     ->join('mstr_kelas_kuliah as kls', 'kls.id_kls = mstr_dosen_kelas.id_kls')
                     ->join('mstr_dosen as dsn', 'dsn.id_dsn = mstr_dosen_kelas.id_dsn')
@@ -199,9 +212,17 @@ class Dinamis extends BaseController
             $tahun = $this->request->getPost('tahun');
             $id_lembaga = $this->request->getPost('prodi');
 
+
+
             if ($tahun == null) {
                 $data = $this->cplModel->where('id_cpl', 0)->findAll();
             } else {
+                if ($tahun == 'is_active') {
+                    $tahun_max = $this->cplModel->where('id_lembaga', $id_lembaga)->selectMax('tahun_cpl')->first();
+                    $tahun = $tahun_max['tahun_cpl'];
+                } else {
+                    $tahun = $tahun;
+                }
                 $data = $this->cplModel->where('id_lembaga', $id_lembaga)->where('tahun_cpl', $tahun)->findAll();
             }
 
@@ -223,11 +244,41 @@ class Dinamis extends BaseController
         if ($this->request->isAJAX()) {
             $idmk = $this->request->getPost('id_mk');
             $row_mk = $this->mkModel->where('id_mk', $idmk)->first();
+            $data_cpmk = $this->cpmkModel->where('idmk_cpmk', $idmk)->findAll();
+            $cpl_diukur = [];
+            foreach ($data_cpmk as $key => $value) {
+                $conn_cpmk_cpl = $this->cpmkcplModel->where('id_cpmk', $value['id_cpmk'])
+                    ->join('mstr_cpl as cpl', 'conn_cpmk_cpl.id_cpl = cpl.id_cpl')
+                    ->orderBy('nomor_cpl', 'ASC')
+                    ->findAll();
+                $cpls = [];
+                foreach ($conn_cpmk_cpl as $k => $v) {
+                    $cpls[] = " CPL " . $v['nomor_cpl'];
+                }
+                $cpl_diukur[$value['id_cpmk']] = $cpls;
+            }
+
             $data = [
                 'mk' => $row_mk,
+                'cpmk' => $data_cpmk,
+                'cpl_diukur' => $cpl_diukur
             ];
             $msg = [
                 'data' => view('dinamis/modal_cpmk', $data)
+            ];
+            echo json_encode($msg);
+        } else {
+            exit("Maaf tidak dapat diproses");
+        }
+    }
+
+    function load_modal_aturasisten()
+    {
+
+        if ($this->request->isAJAX()) {
+            $idmk = $this->request->getPost('id_mk');
+            $msg = [
+                'data' => view('dinamis/modal_atur_asisten')
             ];
             echo json_encode($msg);
         } else {

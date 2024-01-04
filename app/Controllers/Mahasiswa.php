@@ -51,4 +51,11 @@ class Mahasiswa extends BaseController
         ];
         return view('mahasiswa/nilai_subcpmk', $data);
     }
+    public function course_asisten(): string
+    {
+        $data = [
+            'halaman' => ['', 'course-asisten']
+        ];
+        return view('mahasiswa/course_asisten', $data);
+    }
 }

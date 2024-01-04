@@ -81,4 +81,34 @@ class Cpl extends BaseController
         // dd($data_mahasiswa);
         return view('cpl/cpl_mk', $data);
     }
+
+    function atur_mk_pengukur(): string
+    {
+        $data_lembaga = $this->lmbgModel->groupBy('kode_prodi')->groupBy('nama_prodi')->groupBy('id_lembaga')
+            ->select('kode_prodi, nama_prodi, id_lembaga')->findAll();
+        $list_periode = $this->periodeModel->limit(0, 3)->orderBy('kode_smt', 'DESC')->findAll();
+
+        $data = [
+            'halaman' => ['', 'atur-mk-pengukur'],
+            'lembaga' => $data_lembaga,
+            'list_periode' => $list_periode
+        ];
+        // dd($data_mahasiswa);
+        return view('cpl/atur_mk_pengukur', $data);
+    }
+
+    function cpl_map(): string
+    {
+        $data_lembaga = $this->lmbgModel->groupBy('kode_prodi')->groupBy('nama_prodi')->groupBy('id_lembaga')
+            ->select('kode_prodi, nama_prodi, id_lembaga')->findAll();
+        $list_periode = $this->periodeModel->limit(0, 3)->orderBy('kode_smt', 'DESC')->findAll();
+
+        $data = [
+            'halaman' => ['', 'cpl-map'],
+            'lembaga' => $data_lembaga,
+            'list_periode' => $list_periode
+        ];
+        // dd($data_mahasiswa);
+        return view('cpl/cpl_map', $data);
+    }
 }

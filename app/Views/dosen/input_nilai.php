@@ -35,15 +35,15 @@
                                 <th class="text-white text-center">2</th>
                                 <th class="text-white text-center">1</th>
                                 <th class="text-white text-center">2</th>
-                                <th class="text-white text-center">3</th>
+                                <th class="text-white text-center">UTS</th>
                                 <th class="text-white text-center">1</th>
                                 <th class="text-white text-center">2</th>
                                 <th class="text-white text-center">3</th>
                                 <th class="text-white text-center">4</th>
-                                <th class="text-white text-center">1</th>
-                                <th class="text-white text-center">2</th>
-                                <th class="text-white text-center">3</th>
-                                <th class="text-white text-center">4</th>
+                                <th class="text-white text-center">UAS</th>
+                                <th class="text-white text-center">UAS</th>
+                                <th class="text-white text-center">UAS</th>
+                                <th class="text-white text-center">UAS</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -74,10 +74,10 @@
                                     0
                                 </td>
                                 <td>
-                                    0
+                                    65
                                 </td>
                                 <td>
-                                    90
+                                    0
                                 </td>
                                 <td>
                                     0
@@ -135,10 +135,10 @@
                                     0
                                 </td>
                                 <td>
-                                    0
+                                    79
                                 </td>
                                 <td>
-                                    80
+                                    0
                                 </td>
                                 <td>
                                     0

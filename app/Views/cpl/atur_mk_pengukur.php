@@ -3,11 +3,12 @@
 <?php
 $tahun_now = date('Y');
 $tahun_min = $tahun_now - 8;
+$session = \Config\Services::session();
 ?>
 <div class="main-content">
     <section class="section">
         <div class="section-header bg-warning">
-            <h1 class="text-primary">Evaluasi MK</h1>
+            <h1 class="text-primary">Atur MK Pengukur</h1>
         </div>
         <div class="section-body">
             <div class="row">
@@ -52,7 +53,7 @@ $tahun_min = $tahun_now - 8;
                                                             <th>Kode</th>
                                                             <th>Nama</th>
                                                             <th>SKS</th>
-                                                            <th>Evaluasi MK</th>
+                                                            <th>Atur Pengukur</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -75,9 +76,84 @@ $tahun_min = $tahun_now - 8;
 <script>
     $(document).ready(function() {
 
+        $(".btn-simpan").click(function() {
+
+            $('#pbarsapadaspan').text('0%');
+            $('#pbarsapada').css('width', '0%');
+            $('#pbarsapada').attr('aria-valuenow', '0');
+
+
+            PRODI = Array();
+            $('.checkProdi:checked').each(function() {
+                PRODI.push($(this).val());
+            });
+
+            proses_update()
+        });
+
+        var NO = 0;
+
+        function proses_update() {
+            var p = NO + 1;
+            var persen = (p / PRODI.length) * 100;
+            var csrfName = $('.csrf_pstwn').attr('name'); // CSRF Token name
+            var csrfHash = $('.csrf_pstwn').val(); // CSRF hash
+            if (NO < PRODI.length) {
+                var prodi = PRODI[NO];
+                $('#pbarsapadaspan').text(persen + '%');
+                $('#pbarsapada').css('width', persen + '%');
+                $('#pbarsapada').attr('aria-valuenow', persen);
+                $.ajax({
+                    url: "<?= site_url('master/do-import-mk'); ?>",
+                    type: "POST",
+                    dataType: "json",
+                    data: {
+                        prodi: prodi,
+                        [csrfName]: csrfHash
+                    },
+                    dataType: "json",
+                    beforeSend: function() {
+                        $('.btn-simpan').prop('disabled', true);
+                        $('.btn-simpan').html('<i class="fa fa-spin fa-spinner"></i> Mohon tunggu ...');
+                        // $('.tabelrekap').html('');
+                    },
+                    complete: function() {
+                        // $('.btn-update').prop('disabled', false);
+                        // $('.btn-update').html('<i class="fa fa-save text-white"></i> | Update CPL');
+                    },
+                    success: function(response) {
+                        var txt = '<tr><td>' + (NO + 1) + '</td><td>' + response.berhasil.nama_prodi + '</td><td align=center>' + response.berhasil.jumlah + '</td></tr>';
+                        $('.progress-import').append(txt);
+                        NO++;
+                        $('.csrf_pstwn').val(response.token);
+                        proses_update();
+                    },
+                    error: function(xhr, ajaxOptions, thrownError) {
+                        alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
+                    }
+                });
+                return false;
+            } else {
+                console.log('selesai')
+                $('.btn-simpan').prop('disabled', true);
+                $('.btn-simpan').html('Improt Data Siakad');
+
+                $('#pbarsapadaspan').text('100%');
+                $('#pbarsapada').css('width', '100%');
+                $('#pbarsapada').attr('aria-valuenow', '100');
+            }
+        }
+
         dataTabel();
 
     });
+</script>
+<script>
+    function checkAllPrd(c) {
+        $('.checkProdi').each(function() {
+            $(this).prop('checked', c);
+        });
+    }
 </script>
 
 <script>
@@ -114,7 +190,7 @@ $tahun_min = $tahun_now - 8;
                     "mData": null,
                     "bSortable": false,
                     "mRender": function(data, type, full) {
-                        return '<button class="btn btn-info btn-sm" value="' + full['kode_mk'] + '" onclick="evalMK(this.value);">' + 'detail' + '</button>';
+                        return '<button class="btn btn-primary btn-sm" value="' + full['kode_mk'] + '" onclick="evalMK(this.value);">' + '<i class="fas fa-magic"></i> | Pilih' + '</button>';
                     },
                 }
             ],
@@ -124,7 +200,23 @@ $tahun_min = $tahun_now - 8;
 
 <script>
     function evalMK(params) {
-        window.location.href = "/dosen/eval-cpl/" + params;
+
+        swal({
+                title: 'Anda yakin?',
+                text: 'Setelah diatur, mata kuliah ' + params + ' akan digunakan sebagai perhitungan pemenuhan CPL',
+                icon: 'warning',
+                buttons: true,
+                dangerMode: true,
+            })
+            .then((willDelete) => {
+                if (willDelete) {
+                    swal('Mata Kuliah ' + params + ' berhasil diatur sebagai pengukur CPL', {
+                        icon: 'success',
+                    });
+                } else {
+                    swal('Proses dibatalkan');
+                }
+            });
     }
 </script>
 

@@ -3,6 +3,7 @@
 <?php
 $tahun_now = date('Y');
 $tahun_min = $tahun_now - 8;
+$session = \Config\Services::session();
 ?>
 <div class="main-content">
     <section class="section">
@@ -102,6 +103,34 @@ $tahun_min = $tahun_now - 8;
                                                         <?php } ?>
 
                                                     <?php } ?>
+                                                    <tr>
+                                                        <td rowspan="2">
+                                                            ECE3231256 - Analisis Sistem Tenaga Listrik
+                                                        </td>
+                                                        <td rowspan="2">
+                                                            S1 Teknik Elektro
+                                                        </td>
+                                                        <td rowspan="2" class="">
+                                                            Ujang Maman
+                                                        </td>
+                                                        <td>
+                                                            A
+                                                        </td>
+                                                        <td>45</td>
+                                                        <!-- <td> <button class="btn btn-success" type="button">Create</button></td> -->
+                                                        <td colspan="2" rowspan="2" class="text-center">
+                                                            <a href="http://learnmoodle.com/course/view.php?id=4&token=<?= $userSession = $session->get('token_moodle'); ?>" target="_blank" class="btn btn-sm btn-primary">
+                                                                Buka <i>Course</i>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+
+                                                        <td>
+                                                            B
+                                                        </td>
+                                                        <td>49</td>
+                                                    </tr>
                                                 </tbody>
                                             </table>
 

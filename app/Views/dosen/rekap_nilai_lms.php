@@ -20,9 +20,9 @@
                                 </th>
                                 <th class=" text-white">NIM</th>
                                 <th class="text-white">Nama Mahasiswa</th>
-                                <th class="text-white">Studi Kasus (CPMK 1)</th>
-                                <th class="text-white">Quiz (CPMK 2)</th>
-                                <th class="text-white">Proyek (CPMK 3)</th>
+                                <th class="text-white">Quiz segitiga daya</th>
+                                <th class="text-white">Tugas membuat diagram</th>
+                                <th class="text-white">Quiz menghubah besaran</th>
                             </tr>
                         </thead>
                         <tbody class="text-dark">

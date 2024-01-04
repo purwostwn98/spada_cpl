@@ -2,8 +2,16 @@
 
 namespace App\Controllers;
 
+use App\Models\LoginmoodleModel;
+use CodeIgniter\I18n\Time;
+
 class Auth extends BaseController
 {
+    protected $loginmoodleModel;
+    public function __construct()
+    {
+        $this->loginmoodleModel = new LoginmoodleModel();
+    }
     public function index(): string
     {
         $data = [
@@ -35,6 +43,13 @@ class Auth extends BaseController
         ];
         $_SESSION['userdata'] =  $data_session;
         $_SESSION['token_kurikulum'] =  get_token_kurikulum()['access'];
+
+        $timeNow = Time::now('Asia/Jakarta', 'en_US');
+        $kode_sync = $timeNow->getTimestamp();
+        $token = 'admin' . '-' . $kode_sync;
+        $this->loginmoodleModel->simpan($token, 'admin', 'purwostwn', 'Admin', 'User', 'purwostwn98@ums.ac.id', 'admin', 0);
+        $_SESSION['token_moodle'] =  $token;
+
         if ($_SESSION['userdata']['kode_jabatan'] == 1) {
             return redirect()->to('/home_adm');
         } elseif ($_SESSION['userdata']['kode_jabatan'] == 8) {

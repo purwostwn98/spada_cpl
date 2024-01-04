@@ -81,10 +81,10 @@ $jabatan = $userSession['kode_jabatan'];
                                                         <?php if ($jabatan == 1) { ?>
                                                             <td>Ujang Maman, S.T., M.Sc.</td>
                                                         <?php  } ?>
-                                                        <td> <button class="btn btn-sm btn-primary" type="button">Buat</button></td>
-                                                        <td> <button class="btn btn-sm btn-warning" type="button" data-toggle="modal" data-target="#exampleModal">Konek</button></td>
-                                                        <td> <button class="btn btn-sm btn-info" type="button">Unggah</button></td>
-                                                        <td> <button class="btn btn-sm btn-success" type="button">Bagikan</button></td>
+                                                        <td class="text-center"> <button class="btn btn-sm text-center btn-danger" type="button">Buat</button></td>
+                                                        <td class="text-center"> <button class="btn btn-sm text-center btn-warning" type="button" data-toggle="modal" data-target="#exampleModal">Konek</button></td>
+                                                        <td class="text-center"> <button class="btn btn-sm text-center btn-secondary" type="button">Unggah</button></td>
+                                                        <td class="text-center"> <button class="btn btn-sm text-center btn-success" type="button">Bagikan</button></td>
                                                     </tr>
                                                     <tr>
                                                         <td>ECE3231256 - Analisis Sistem Tenaga Listrik</td>
@@ -92,10 +92,8 @@ $jabatan = $userSession['kode_jabatan'];
                                                         <?php if ($jabatan == 1) { ?>
                                                             <td>Huda, S.T., M.Sc.</td>
                                                         <?php  } ?>
-                                                        <td> <button class="btn btn-sm btn-primary" type="button">Buat</button></td>
-                                                        <td> <button class="btn btn-sm btn-warning" type="button" data-toggle="modal" data-target="#exampleModal">Konek</button></td>
-                                                        <td> <button class="btn btn-sm btn-info" type="button">Unggah</button></td>
-                                                        <td> <button class="btn btn-sm btn-success" type="button">Bagikan</button></td>
+                                                        <td colspan="3" class="text-center"> <a class="btn btn-sm btn-primary" href="http://learnmoodle.com/course/view.php?id=4&token=<?= $userSession = $session->get('token_moodle'); ?>" target="_blank">Buka <i>Course</i> </a></td>
+                                                        <td class="text-center"> <button class="btn btn-sm btn-success text-center" type="button">Bagikan</button></td>
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -135,14 +133,6 @@ $jabatan = $userSession['kode_jabatan'];
                         <tr>
                             <td scope="row">1</td>
                             <td>2022/2023 Gasal</td>
-                            <td>Ujang Maman, S.T., M.Sc.</td>
-                            <td><button class="btn btn-sm btn-primary">Pilih</button></td>
-                        </tr>
-                    </tbody>
-                    <tbody>
-                        <tr>
-                            <td scope="row">2</td>
-                            <td>2021/2022 Gasal</td>
                             <td>Ujang Maman, S.T., M.Sc.</td>
                             <td><button class="btn btn-sm btn-primary">Pilih</button></td>
                         </tr>

@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
     <title>Spada - UMS</title>
+    <link rel="icon" type="image/png" href="<?= base_url(); ?>/assets/img/logo_web.png">
 
     <!-- General CSS Files -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -153,7 +154,7 @@ $kaprodi = $userSession['kaprodi'];
                         </ul>
                     <?php  } ?>
 
-
+                    <!-- // Menu dosen -->
                     <?php if ($jabatan == 8) { ?>
                         <ul class="sidebar-menu mt-4">
                             <li class="menu-header">Menu Dosen</li>
@@ -177,8 +178,20 @@ $kaprodi = $userSession['kaprodi'];
                                 <li class="nav-item <?= $halaman[1] == 'cpl-angkatan' ? 'active' : ''; ?>">
                                     <a href="/cpl-angkatan" class="nav-link"><i class="fas fa-users"></i> <span>CPL Angkatan</span></a>
                                 </li>
+                                <li class="nav-item <?= $halaman[1] == 'monitor-mk-pengukur' ? 'active' : ''; ?>">
+                                    <a href="/kaprodi/monitor-mk-pengukur" class="nav-link"><i class="fas fa-users"></i> <span>Monitor MK Pengukur</span></a>
+                                </li>
                                 <li class="nav-item <?= $halaman[1] == 'cpl-mk' ? 'active' : ''; ?>">
                                     <a href="/cpl-mk" class="nav-link"><i class="fas fa-chalkboard-teacher"></i> <span>Eval. CPL MK</span></a>
+                                </li>
+                                <li class="nav-item <?= $halaman[1] == 'cpl-prodi' ? 'active' : ''; ?>">
+                                    <a href="/kaprodi/cpl-prodi" class="nav-link"><i class="fas fa-thumbtack"></i> <span>CPL Prodi</span></a>
+                                </li>
+                                <li class="nav-item <?= $halaman[1] == 'atur-mk-pengukur' ? 'active' : ''; ?>">
+                                    <a href="/atur-mk-pengukur" class="nav-link"><i class="fas fa-wrench"></i> <span>Atur MK Pengukur</span></a>
+                                </li>
+                                <li class="nav-item <?= $halaman[1] == 'cpl-map' ? 'active' : ''; ?>">
+                                    <a href="/cpl-map" class="nav-link"><i class="far fa-compass"></i> <span>CPL Map</span></a>
                                 </li>
                             <?php } ?>
 
@@ -195,19 +208,11 @@ $kaprodi = $userSession['kaprodi'];
                                 <a href="/mhs/nilai-cpl" class="nav-link"><i class="fas fa-th-large"></i> <span>Nilai CPL</span></a>
                             </li>
 
-                            <?php if ($kaprodi == 1) { ?>
-                                <li class="menu-header">CPL</li>
-                                <li class="nav-item <?= $halaman[1] == 'cpl-mhs' ? 'active' : ''; ?>">
-                                    <a href="/cpl-mhs" class="nav-link"><i class="fas fa-user-graduate"></i> <span>CPL Mahasiswa</span></a>
-                                </li>
-                                <li class="nav-item <?= $halaman[1] == 'cpl-angkatan' ? 'active' : ''; ?>">
-                                    <a href="/cpl-angkatan" class="nav-link"><i class="fas fa-users"></i> <span>CPL Angkatan</span></a>
-                                </li>
-                                <li class="nav-item <?= $halaman[1] == 'cpl-mk' ? 'active' : ''; ?>">
-                                    <a href="/cpl-mk" class="nav-link"><i class="fas fa-chalkboard-teacher"></i> <span>Eval. CPL MK</span></a>
-                                </li>
-                            <?php } ?>
 
+                            <li class="menu-header">Menu Asisten</li>
+                            <li class="nav-item <?= $halaman[1] == 'course-asisten' ? 'active' : ''; ?>">
+                                <a href="/mhs/course-asisten" class="nav-link"><i class="fas fa-book"></i> <span><i>Course</i></span></a>
+                            </li>
                         </ul>
                     <?php } ?>
 
@@ -257,6 +262,8 @@ $kaprodi = $userSession['kaprodi'];
     <script src="<?= base_url(); ?>/node_modules/jqvmap/dist/jquery.vmap.min.js"></script>
     <script src="<?= base_url(); ?>/node_modules/jqvmap/dist/maps/jquery.vmap.world.js"></script>
     <script src="<?= base_url(); ?>/node_modules/jqvmap/dist/maps/jquery.vmap.indonesia.js"></script>
+    <!-- JS Libraies sweet alert -->
+    <script src="<?= base_url(); ?>/node_modules/sweetalert/dist/sweetalert.min.js"></script>
 
     <!-- Template JS File -->
     <script src="<?= base_url(); ?>/assets/js/scripts.js"></script>
@@ -265,8 +272,9 @@ $kaprodi = $userSession['kaprodi'];
     <!-- Page Specific JS File -->
     <script src="<?= base_url(); ?>/assets/js/page/modules-datatables.js"></script>
 
-    <!-- Page Specific JS File -->
-    <!-- <script src="<?= base_url(); ?>/assets/js/page/components-statistic.js"></script> -->
+    <!-- Page Specific JS File sweetalert -->
+    <script src="<?= base_url(); ?>/assets/js/page/modules-sweetalert.js"></script>
+
 </body>
 
 </html>

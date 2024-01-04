@@ -1,5 +1,8 @@
 <?= $this->extend("/layout/back_template.php"); ?>
 <?= $this->section("konten"); ?>
+<?php
+$session = \Config\Services::session();
+?>
 <div class="main-content">
     <section class="section">
         <div class="section-header bg-warning">
@@ -36,7 +39,7 @@
                                     <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 29px, 0px);">
                                         <a class="dropdown-item has-icon" href="#"><i class="fas fa-user-plus"></i> Atur peserta manual</a>
                                         <a class="dropdown-item has-icon" href="#"><i class="fas fa-chalkboard-teacher"></i> Atur dosen</a>
-                                        <a class="dropdown-item has-icon" href="#"><i class="fas fa-user-tie"></i> Atur asisten dosen</a>
+                                        <a class="dropdown-item has-icon" href="#" id="atur_asisten"><i class="fas fa-user-tie"></i> Atur asisten dosen</a>
                                         <a class="dropdown-item has-icon" href="#"><i class="fas fa-users"></i> <i>Enrolled Users</i></a>
                                         <a class="dropdown-item has-icon" href="#"><i class="fas fa-street-view"></i> Atur Grup LMS</a>
                                     </div>
@@ -78,7 +81,7 @@
                         </div>
                         <hr class="mb-0">
                         <div class="article-title mt-0">
-                            <h1 class="m-0"><a href="#">ECE3231256 - Analisis Sistem Tenaga Listrik</a></h1>
+                            <h1 class="m-0"><a target="_blank" href="http://learnmoodle.com/course/view.php?id=4&token=<?= $userSession = $session->get('token_moodle'); ?>">ECE3231256 - Analisis Sistem Tenaga Listrik</a></h1>
                             <span class="pt-0">Program Studi Teknik Elektro</span>
                         </div>
                         <div id="bodydesc" style="margin-left:auto; margin-right:auto; height: 50px; overflow-y: scroll;">
@@ -148,7 +151,7 @@
                                     <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 29px, 0px);">
                                         <a class="dropdown-item has-icon" href="#"><i class="fas fa-user-plus"></i> Atur peserta manual</a>
                                         <a class="dropdown-item has-icon" href="#"><i class="fas fa-chalkboard-teacher"></i> Atur dosen</a>
-                                        <a class="dropdown-item has-icon" href="#"><i class="fas fa-user-tie"></i> Atur asisten dosen</a>
+                                        <a class="dropdown-item has-icon" href="#" id="atur_asisten"><i class="fas fa-user-tie"></i> Atur asisten dosen</a>
                                         <a class="dropdown-item has-icon" href="#"><i class="fas fa-users"></i> <i>Enrolled Users</i></a>
                                         <a class="dropdown-item has-icon" href="#"><i class="fas fa-street-view"></i> Atur Grup LMS</a>
                                     </div>
@@ -190,7 +193,7 @@
                         </div>
                         <hr class="mb-0">
                         <div class="article-title mt-0">
-                            <h1 class="m-0"><a href="#">ECE3231117 - Praktikum Dasar Pemrograman</a></h1>
+                            <h1 class="m-0"><a href="http://learnmoodle.com/course/view.php?id=4&token=<?= $userSession = $session->get('token_moodle'); ?>">ECE3231117 - Praktikum Dasar Pemrograman</a></h1>
                             <span class="pt-0">Program Studi Teknik Elektro</span>
                         </div>
                         <div id="bodydesc" style="margin-left:auto; margin-right:auto; height: 50px; overflow-y: scroll;">
@@ -222,4 +225,38 @@
         </article>
     </section>
 </div>
+
+<div class="modal01">
+
+</div>
+<script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+<script>
+    $(document).ready(function() {
+        // Ketika link dengan id 'link' diklik
+        $("#atur_asisten").on("click", function(e) {
+            e.preventDefault(); // Mencegah perilaku default dari elemen <a> untuk mengarahkan langsung ke '#'
+
+            // Redirect ke halaman web tertentu (ganti 'URL_HALAMAN' dengan URL yang diinginkan)
+            // window.location.href = 'URL_HALAMAN';
+            $.ajax({
+                url: "<?= site_url('dinamis/load-atur-asisten'); ?>",
+                type: "POST",
+                dataType: "json",
+                data: {
+                    id_mk: "id_mk"
+                },
+                dataType: "json",
+                beforeSend: function() {},
+                complete: function() {},
+                success: function(response) {
+                    $(".modal01").html(response.data);
+                    $(".bd-example-modal-lg").modal('show');
+                },
+                error: function(xhr, ajaxOptions, thrownError) {
+                    alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
+                }
+            });
+        });
+    });
+</script>
 <?= $this->endSection(); ?>

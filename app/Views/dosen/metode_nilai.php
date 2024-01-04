@@ -4,7 +4,9 @@
     <section class="section">
         <div class="section-header">
             <h1>Sumber Penilaian</h1>
-
+            <div class="section-header-breadcrumb">
+                <div class="breadcrumb-item">ECE3231256 - Analisis Sistem Tenaga Listrik</div>
+            </div>
         </div>
 
         <div class="section-body">
@@ -32,9 +34,15 @@
                                                 <div class="col-sm-8">
                                                     <select style="font-size: 13px;" class="form-control form-sm bg-primary text-white filter-prd" id="filter_smbr" name="filter_prd" onchange="loadMhs()">
                                                         <option value="Manual" selected>Manual</option>
-                                                        <option value="Quiz">Studi Kasus</option>
-                                                        <option value="Tugas">Proyek</option>
-                                                        <option value="Quiz">Quiz</option>
+                                                        <option value="Quiz">Quiz segitiga daya</option>
+                                                        <option value="Tugas">Tugas membuat diagram</option>
+                                                        <option value="Quiz">Tugas mengubah dasar besaran</option>
+                                                        <option value="Quiz">Quiz Gauss Seidel</option>
+                                                        <option value="Quiz">Quiz Newton Raphson</option>
+                                                        <option value="Quiz">Menggambar diagram segaris</option>
+                                                        <option value="Quiz">Memasukan data program Etap</option>
+                                                        <option value="UTS">UTS</option>
+                                                        <option value="UAS">UAS</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -57,9 +65,15 @@
                                                 <div class="col-sm-8">
                                                     <select style="font-size: 13px;" class="form-control form-sm bg-primary text-white filter-prd" id="filter_smbr" name="filter_prd" onchange="loadMhs()">
                                                         <option value="Manual" selected>Manual</option>
-                                                        <option value="Quiz">Studi Kasus</option>
-                                                        <option value="Tugas">Proyek</option>
-                                                        <option value="Quiz">Quiz</option>
+                                                        <option value="Quiz">Quiz segitiga daya</option>
+                                                        <option value="Tugas">Tugas membuat diagram</option>
+                                                        <option value="Quiz">Tugas mengubah dasar besaran</option>
+                                                        <option value="Quiz">Quiz Gauss Seidel</option>
+                                                        <option value="Quiz">Quiz Newton Raphson</option>
+                                                        <option value="Quiz">Menggambar diagram segaris</option>
+                                                        <option value="Quiz">Memasukan data program Etap</option>
+                                                        <option value="UTS">UTS</option>
+                                                        <option value="UAS">UAS</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -90,9 +104,15 @@
                                                 <div class="col-sm-8">
                                                     <select style="font-size: 13px;" class="form-control form-sm bg-primary text-white filter-prd" id="filter_smbr" name="filter_prd" onchange="loadMhs()">
                                                         <option value="Manual" selected>Manual</option>
-                                                        <option value="Quiz">Studi Kasus</option>
-                                                        <option value="Tugas">Proyek</option>
-                                                        <option value="Quiz">Quiz</option>
+                                                        <option value="Quiz">Quiz segitiga daya</option>
+                                                        <option value="Tugas">Tugas membuat diagram</option>
+                                                        <option value="Quiz">Tugas mengubah dasar besaran</option>
+                                                        <option value="Quiz">Quiz Gauss Seidel</option>
+                                                        <option value="Quiz">Quiz Newton Raphson</option>
+                                                        <option value="Quiz">Menggambar diagram segaris</option>
+                                                        <option value="Quiz">Memasukan data program Etap</option>
+                                                        <option value="UTS">UTS</option>
+                                                        <option value="UAS">UAS</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -115,9 +135,15 @@
                                                 <div class="col-sm-8">
                                                     <select style="font-size: 13px;" class="form-control form-sm bg-primary text-white filter-prd" id="filter_smbr" name="filter_prd" onchange="loadMhs()">
                                                         <option value="Manual" selected>Manual</option>
-                                                        <option value="Quiz">Studi Kasus</option>
-                                                        <option value="Tugas">Proyek</option>
-                                                        <option value="Quiz">Quiz</option>
+                                                        <option value="Quiz">Quiz segitiga daya</option>
+                                                        <option value="Tugas">Tugas membuat diagram</option>
+                                                        <option value="Quiz">Tugas mengubah dasar besaran</option>
+                                                        <option value="Quiz">Quiz Gauss Seidel</option>
+                                                        <option value="Quiz">Quiz Newton Raphson</option>
+                                                        <option value="Quiz">Menggambar diagram segaris</option>
+                                                        <option value="Quiz">Memasukan data program Etap</option>
+                                                        <option value="UTS">UTS</option>
+                                                        <option value="UAS">UAS</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -148,9 +174,15 @@
                                                 <div class="col-sm-8">
                                                     <select style="font-size: 13px;" class="form-control form-sm bg-primary text-white filter-prd" id="filter_smbr" name="filter_prd" onchange="loadMhs()">
                                                         <option value="Manual" selected>Manual</option>
-                                                        <option value="Quiz">Studi Kasus</option>
-                                                        <option value="Tugas">Proyek</option>
-                                                        <option value="Quiz">Quiz</option>
+                                                        <option value="Quiz">Quiz segitiga daya</option>
+                                                        <option value="Tugas">Tugas membuat diagram</option>
+                                                        <option value="Quiz">Tugas mengubah dasar besaran</option>
+                                                        <option value="Quiz">Quiz Gauss Seidel</option>
+                                                        <option value="Quiz">Quiz Newton Raphson</option>
+                                                        <option value="Quiz">Menggambar diagram segaris</option>
+                                                        <option value="Quiz">Memasukan data program Etap</option>
+                                                        <option value="UTS">UTS</option>
+                                                        <option value="UAS">UAS</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -173,9 +205,15 @@
                                                 <div class="col-sm-8">
                                                     <select style="font-size: 13px;" class="form-control form-sm bg-primary text-white filter-prd" id="filter_smbr" name="filter_prd" onchange="loadMhs()">
                                                         <option value="Manual" selected>Manual</option>
-                                                        <option value="Quiz">Studi Kasus</option>
-                                                        <option value="Tugas">Proyek</option>
-                                                        <option value="Quiz">Quiz</option>
+                                                        <option value="Quiz">Quiz segitiga daya</option>
+                                                        <option value="Tugas">Tugas membuat diagram</option>
+                                                        <option value="Quiz">Tugas mengubah dasar besaran</option>
+                                                        <option value="Quiz">Quiz Gauss Seidel</option>
+                                                        <option value="Quiz">Quiz Newton Raphson</option>
+                                                        <option value="Quiz">Menggambar diagram segaris</option>
+                                                        <option value="Quiz">Memasukan data program Etap</option>
+                                                        <option value="UTS">UTS</option>
+                                                        <option value="UAS">UAS</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -206,9 +244,15 @@
                                                 <div class="col-sm-8">
                                                     <select style="font-size: 13px;" class="form-control form-sm bg-primary text-white filter-prd" id="filter_smbr" name="filter_prd" onchange="loadMhs()">
                                                         <option value="Manual" selected>Manual</option>
-                                                        <option value="Quiz">Studi Kasus</option>
-                                                        <option value="Tugas">Proyek</option>
-                                                        <option value="Quiz">Quiz</option>
+                                                        <option value="Quiz">Quiz segitiga daya</option>
+                                                        <option value="Tugas">Tugas membuat diagram</option>
+                                                        <option value="Quiz">Tugas mengubah dasar besaran</option>
+                                                        <option value="Quiz">Quiz Gauss Seidel</option>
+                                                        <option value="Quiz">Quiz Newton Raphson</option>
+                                                        <option value="Quiz">Menggambar diagram segaris</option>
+                                                        <option value="Quiz">Memasukan data program Etap</option>
+                                                        <option value="UTS">UTS</option>
+                                                        <option value="UAS">UAS</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -231,9 +275,15 @@
                                                 <div class="col-sm-8">
                                                     <select style="font-size: 13px;" class="form-control form-sm bg-primary text-white filter-prd" id="filter_smbr" name="filter_prd" onchange="loadMhs()">
                                                         <option value="Manual" selected>Manual</option>
-                                                        <option value="Quiz">Studi Kasus</option>
-                                                        <option value="Tugas">Proyek</option>
-                                                        <option value="Quiz">Quiz</option>
+                                                        <option value="Quiz">Quiz segitiga daya</option>
+                                                        <option value="Tugas">Tugas membuat diagram</option>
+                                                        <option value="Quiz">Tugas mengubah dasar besaran</option>
+                                                        <option value="Quiz">Quiz Gauss Seidel</option>
+                                                        <option value="Quiz">Quiz Newton Raphson</option>
+                                                        <option value="Quiz">Menggambar diagram segaris</option>
+                                                        <option value="Quiz">Memasukan data program Etap</option>
+                                                        <option value="UTS">UTS</option>
+                                                        <option value="UAS">UAS</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -244,62 +294,6 @@
                                     </div>
                                     <span class="badge badge-info">Teknik Penilaian: Observasi | Bobot: 70%</span> <br>
                                     <span>Deskripsi: Mahasiswa mampu memasukan data dan menjalankan aliran beban metode gauus seidel atau Newton Rapshon dengan program Etap</span>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="text-primary mb-0"><i>Setting</i> sumber nilai UTS dan UAS</h5>
-                            <span>Pengaturan ini berfungsi untuk mengintegrasikan nilai SPADA dengan ANUMS pada komponen nilai UTS dan UAS</span>
-                            <ul class="list-group mt-3">
-                                <li class="list-group-item bg-warning">
-                                    <div class="row d-flex justify-content-between ">
-                                        <div class="col-4">
-                                            <span class="badge badge-dark">UTS</span>
-                                        </div>
-                                        <div class="col-6">
-                                            <div class="form-group row">
-                                                <label for="inputEmail3" class="col-sm-4 col-form-label">Pilih sumber nilai: </label>
-                                                <div class="col-sm-8">
-                                                    <select style="font-size: 13px;" class="form-control form-sm bg-primary text-white filter-prd" id="filter_smbr" name="filter_prd" onchange="loadMhs()">
-                                                        <option value="" selected>Pilih sumber</option>
-                                                        <option value="cpmk1">CPMK 1</option>
-                                                        <option value="cpmk2">CPMK 2</option>
-                                                        <option value="cpmk2">CPMK 3</option>
-                                                        <option value="cpmk2">CPMK 4</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-2">
-                                            <button class="btn btn-primary text-white" type="button"><i class="fa fa-save"></i> |Simpan</button>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="list-group-item bg-warning">
-                                    <div class="row d-flex justify-content-between ">
-                                        <div class="col-4">
-                                            <span class="badge badge-dark">UAS</span>
-                                        </div>
-                                        <div class="col-6">
-                                            <div class="form-group row">
-                                                <label for="inputEmail3" class="col-sm-4 col-form-label">Pilih sumber nilai: </label>
-                                                <div class="col-sm-8">
-                                                    <select style="font-size: 13px;" class="form-control form-sm bg-primary text-white filter-prd" id="filter_smbr" name="filter_prd" onchange="loadMhs()">
-                                                        <option value="" selected>Pilih sumber</option>
-                                                        <option value="cpmk1">CPMK 1</option>
-                                                        <option value="cpmk2">CPMK 2</option>
-                                                        <option value="cpmk2">CPMK 3</option>
-                                                        <option value="cpmk2">CPMK 4</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-2">
-                                            <button class="btn btn-primary text-white" type="button"><i class="fa fa-save"></i> |Simpan</button>
-                                        </div>
-                                    </div>
                                 </li>
                             </ul>
                         </div>

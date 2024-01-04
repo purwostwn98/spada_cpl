@@ -102,7 +102,7 @@
                                             <?php } ?>
                                         </div>
                                         <br>
-                                        <label class="d-block"><strong>Pilih Prgram Studi</strong></label>
+                                        <label class="d-block"><strong>Pilih Program Studi</strong></label>
                                         <div class="form-check">
                                             <input class="form-check-input" onclick="checkAllPrd(this.checked);" type="checkbox" id="checkAllProdi" name="checkAllProdi" value="#">
                                             <label class="form-check-label" for="checkAllProdi">
